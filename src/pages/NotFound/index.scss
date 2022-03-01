@@ -1,0 +1,15 @@
+.not-found {
+  h1 {
+    font-size: 8em;
+    color: var(--text);
+    font-weight: bold;
+    position: relative;
+    margin-bottom: 40px;
+    img {
+      width: 100px;
+    }
+  }
+  p {
+    font-size: 30px !important;
+  }
+}

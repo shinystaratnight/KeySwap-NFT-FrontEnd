@@ -1,0 +1,127 @@
+.creator-edit {
+  .banner {
+    height: 300px;
+    overflow: hidden;
+    margin: 0px;
+    background: #ecdad2;
+
+    @media (max-width: 576px) {
+      height: 120px;
+    }
+    .file-box {
+      border-radius: 0px;
+      text-align: center;
+
+      img {
+        width: auto;
+        height: 100%;
+      }
+
+      h3 {
+        @media (max-width: 576px) {
+          font-size: 12px;
+        }
+      }
+
+      .file-buttton {
+        @media (max-width: 576px) {
+          padding: 3px 15px;
+        }
+
+        img {
+          width: 15px;
+        }
+      }
+    }
+  }
+
+  .container {
+    margin-top: -88px;
+    @media (max-width: 576px) {
+      margin-top: -55px;
+    }
+
+    .user-block {
+      .profile {
+        padding: 0px;
+        width: 180px;
+        height: 180px;
+        margin: unset;
+
+        @media (max-width: 576px) {
+          width: 100px;
+          height: 100px;
+        }
+
+        .profile-file-overlay {
+          .profile-file-buttton {
+            @media (max-width: 576px) {
+              padding: 0px 15px;
+            }
+          }
+        }
+        .tick-icon {
+          width: 32px;
+          height: 32px;
+          bottom: 20px;
+          right: 0px;
+          @media (max-width: 576px) {
+            width: 20px;
+            height: 20px;
+            bottom: 5px;
+            right: 4px;
+          }
+        }
+      }
+
+      .username {
+        font-size: 36px;
+        @media (max-width: 576px) {
+          font-size: 20px;
+        }
+      }
+      .sub-title-text {
+        font-size: 20px;
+        @media (max-width: 576px) {
+          font-size: 13px;
+        }
+      }
+      .icon-button {
+        margin-top: -8px;
+        img {
+          height: 13px;
+          width: 13px;
+        }
+      }
+      .social-buttons {
+        margin: unset;
+      }
+
+      textarea {
+        background-color: #c6907554;
+        border: 0px solid #828282;
+
+        &:focus {
+          border: none;
+          box-shadow: none;
+          outline: none !important;
+        }
+      }
+
+      .submit {
+        margin: 40px 0px;
+        button {
+          width: 50%;
+          height: 65px;
+          // border-radius: 100px;
+        }
+      }
+    }
+
+    .socials {
+      .details {
+        font-size: 24px;
+      }
+    }
+  }
+}

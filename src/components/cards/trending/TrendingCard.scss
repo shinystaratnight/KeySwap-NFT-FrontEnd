@@ -1,0 +1,44 @@
+@import '../../../utils/style/mixins';
+
+.trending-card {
+  @include cardStyle(18rem);
+}
+.trending-card:hover {
+  transform: scale(1.01);
+  box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.7);
+  -webkit-box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.7);
+}
+
+.trending-card .card-header {
+  @include cardHeader(325px);
+}
+.trending-card .card-header::after {
+  @include cardHeaderAfter();
+}
+
+.trending-card .card-img-overlay {
+  text-align: center;
+  top: unset;
+  bottom: 0px;
+}
+.trending-card .card-img-overlay .title {
+  color: white;
+  font-size: 20px;
+  margin-bottom: 5px;
+  text-align: left;
+  font-family: ui-monospace;
+}
+.trending-card .card-img-overlay .sub-title {
+  font-size: 11px;
+  margin-bottom: 50px;
+  text-align: left;
+}
+
+.trending-card .card-img-overlay .row {
+  text-align: left;
+}
+.trending-card .card-img-overlay .row .btn {
+  margin-right: 10px;
+  font-size: 12px;
+}

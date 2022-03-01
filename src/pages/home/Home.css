@@ -1,0 +1,80 @@
+.other-categories {
+  margin-top: 340px;
+}
+.load-more-action {
+  margin-bottom: 80px;
+}
+
+#home-page .container {
+  min-height: 200px;
+}
+
+#home-page .explorebox {
+  text-align: right;
+  margin-bottom: -30px;
+}
+
+#home-page .explorebox span {
+  padding: 10px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#home-page .explorebox .exploreBtn {
+  padding: 15px 40px;
+  font-size: 22px;
+  border-width: 2px;
+}
+
+#home-page .explorebox .exploreBtn img {
+  margin-right: 30px;
+  width: 25px;
+}
+
+#home-page .pageBG img {
+  height: 800px !important;
+}
+
+#home-page .bg-img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: -1;
+}
+
+#home-page .head {
+  font-size: 64px;
+  letter-spacing: -2px;
+  line-height: 72px;
+  color: var(--text);
+  font-weight: 800;
+  text-align: center;
+  margin-top: 50px;
+}
+
+#home-page .head-text {
+  text-align: center;
+  font-size: 18px;
+  line-height: 40px;
+  color: var(--text);
+  text-transform: lowercase;
+  opacity: 0.8;
+  margin: 1rem;
+}
+
+@media (max-width: 576px) {
+  #home-page .head {
+    line-height: 52px;
+    font-size: 50px;
+  }
+
+  #home-page .head-text {
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  #home-page .explorebox {
+    padding: 0px 0 100px;
+  }
+}
