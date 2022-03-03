@@ -41,8 +41,8 @@ export const Home = () => {
   const [loading, setLoading] = useState(false);
   const [start, setStart] = useState(0);
   const [category, setCategory] = useState('');
-  const [sortField, setSortField] = useState('');
-  const [sortOrder, setSortOrder] = useState('');
+  const [sortField, setSortField] = useState('createdAt');
+  const [sortOrder, setSortOrder] = useState('desc');
   const [isFilterModal, setFilterModal] = useState(false);
   const [filterValue, setFilterValue] = useState('Default');
 
@@ -65,11 +65,13 @@ export const Home = () => {
 
   useEffect(() => {
     if (items?.nfts?.length) {
-      const newNFTObjectList = [...NFTObjectList];
-      if (!items?.nfts.find(item => isAlreadyAdded(item))) {
-        newNFTObjectList.push(...items.nfts);
-        setLoading(false);
+      var newNFTObjectList = [...NFTObjectList];
+      for (var i = 0; i < items?.nfts?.length; i++) {
+        if (!isAlreadyAdded(items?.nfts[i])) {
+          newNFTObjectList.push(items?.nfts[i]);
+        }
       }
+      setLoading(false);
       setNFTObjectList(newNFTObjectList);
     }
   }, [items]);
@@ -81,8 +83,8 @@ export const Home = () => {
 
   function onFilterBy(filter) {
     if (filter === 'Default') {
-      setSortField('');
-      setSortOrder('');
+      setSortField('createdAt');
+      setSortOrder('desc');
     } else if (filter === 'Cheapest') {
       setSortField('price');
       setSortOrder('asc');
