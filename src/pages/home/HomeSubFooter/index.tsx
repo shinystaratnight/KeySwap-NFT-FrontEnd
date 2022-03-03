@@ -7,7 +7,7 @@ export default function HomeSubFooter() {
       <InfoText variant="primary" size="lg">
         WE’RE BRINGING DIGITAL CREATORS, CRYPTO NATIVES, AND COLLECTORS TOGETHER TO MOVE CULTURE FORWARD.
       </InfoText>
-      <Button variant="dark" label="became a creator on Nanai"></Button>
+      <Button variant="dark" label="became a creator on KeySwap"></Button>
     </div>
   );
 }

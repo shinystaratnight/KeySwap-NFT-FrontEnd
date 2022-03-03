@@ -30,7 +30,7 @@ function App() {
           <div className="body">
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route exact path="/details/:baseId" component={ProductDetails} />
+              <Route exact path="/details/:tokenId" component={ProductDetails} />
               <Route exact path="/creator" component={Creator} />
               <Route exact path="/creatorDetail/:walletAddress" component={Detail} />
               <Route exact path="/upload" component={Upload} />

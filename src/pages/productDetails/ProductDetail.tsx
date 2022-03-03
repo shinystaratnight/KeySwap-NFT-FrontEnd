@@ -17,11 +17,11 @@ import { PageBG } from 'components/page-bg';
 
 export const ProductDetails = ({
   match: {
-    params: { baseId },
+    params: { tokenId },
   },
-}: RouteComponentProps<{ baseId: string }>) => {
+}: RouteComponentProps<{ tokenId: string }>) => {
   const history = useHistory();
-  const nftDetail: NFTDetail = useGetNFTDetail(baseId);
+  const nftDetail: NFTDetail = useGetNFTDetail(tokenId);
 
   if (!nftDetail) {
     return <></>;
@@ -57,7 +57,7 @@ export const ProductDetails = ({
           <Col sm="auto" className="text-center text-md-right py-2 py-sm-0">
             <a
               className="mr-3"
-              href={`https://bscscan.com/token/0x495a3512678ad8c68592eef58bd7b4996fab2e36?a=${nftDetail?.nft.tokenID}`}
+              href={`https://bscscan.com/token/0x11110314DC52400654551F7d21c18aF79aD259A2?a=${nftDetail?.nft.tokenID}`}
               target="_blank"
             >
               <img src="/img/BSCscan.svg" /> BSCscan
@@ -87,7 +87,7 @@ export const ProductDetails = ({
       </div> */}
         <div className="product-details__bottom">
           <div className="text-center">
-            <Button variant="primary" label="View all Work By Nanai" onClick={goToCreatorProfile} />
+            <Button variant="primary" label="View all Work By KeySwap" onClick={goToCreatorProfile} />
           </div>
         </div>
       </Container>

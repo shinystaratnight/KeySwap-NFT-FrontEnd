@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Col, Image, Row } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 import { useProfile } from 'state/hooks';
-import { getImageIpfsHash, readFileAsync } from 'utils/ipfs';
+import { getIpfsHash, getIpfsHashFromFile } from 'utils/ipfs';
 import { Button } from '../../../components/button/Button';
 import FileUpload from '../../../components/FileUpload';
 import InfoText from '../../../components/InfoText';
@@ -49,7 +49,7 @@ function Upload() {
 
   const submitAsset = async () => {
     if (!nftImage) {
-      toast.error('Please select the Artist!');
+      toast.error('Please select the Artwork!');
       return;
     }
 
@@ -67,38 +67,35 @@ function Upload() {
     const load_toast_id = toast.loading('Please wait...');
 
     try {
-      const buffer = await readFileAsync(nftImage);
-      const hash = await getImageIpfsHash(buffer);
-      const image_url = `https://ipfs.io/ipfs/${hash}`;
+      let hash = await getIpfsHashFromFile(nftImage);
+      const image_url = `https://keyswap.mypinata.cloud/ipfs/${hash}`;
 
-      var formdata = new FormData();
+      let metaData: any = {};
 
-      formdata.append('nft_name', nftName);
-      formdata.append('nft_description', nftDecription);
-      formdata.append('nft_price', nftPrice);
-      formdata.append('image_url', image_url);
+      metaData = {
+        name: nftName,
+        description: nftDecription,
+        image: image_url,
+        attributes: [],
+      };
 
-      var response: any = await API.post('/add_nft_metadata', formdata);
+      const nft_unit_price = ethers.utils.parseEther(nftPrice);
 
-      if (response.status === 'success') {
-        const base_id = response.base_id;
+      const metaDataHash = await getIpfsHash(metaData);
+      const tokenURI = `https://keyswap.mypinata.cloud/ipfs/${metaDataHash}`;
 
-        const nft_unit_price = ethers.utils.parseEther(nftPrice);
-        const tokenURI = `${API.apiUrl}/nfts/${base_id}`;
-        const txhash = await mint(chainId, library.getSigner(), account, tokenURI, nft_unit_price);
+      const txhash = await mint(chainId, library.getSigner(), account, tokenURI, nft_unit_price);
 
-        if (txhash !== false) {
+      if (txhash !== false) {
+        toast.success('NFT Product is created successfully!');
+        setTimeout(async () => {
           await API.get('/sync_block');
-          toast.success('NFT Product is created successfully!');
-          setTimeout(() => {
-            history.push('/');
-          }, 3000);
-        } else {
-          toast.error('NFT Artist Upload Failed!');
-        }
+          history.push('/');
+        }, 3000);
       } else {
-        toast.error('NFT Artist Upload Failed!');
+        toast.error('NFT Create Failed!');
       }
+
     } catch (error: any) {
       toast.error(error.message);
     } finally {

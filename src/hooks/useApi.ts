@@ -8,7 +8,7 @@ export interface NFTList {
   total_count: number
 }
 export interface NFTObjectData {
-  baseID?: string;
+  tokenID: number;
 
   name: string;
   description: string;
@@ -20,7 +20,6 @@ export interface NFTObjectData {
   createdAt?: number;
   initialCreatorAddress?: string;
   ownerAddress?: string;
-  tokenID?: number;
 
   voteCount?: number;
   listed?: boolean;
@@ -108,13 +107,13 @@ export const useGetNFTList = ({start, count, category = '', sort_field = '', sor
   return data;
 };
 
-export const useGetNFTDetail = baseID => {
+export const useGetNFTDetail = tokenId => {
   const [data, setData] = useState<NFTDetail>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const strUrl = `${baseApiUrl}/nfts/${baseID}`;
+        const strUrl = `${baseApiUrl}/nfts/${tokenId}`;
         const response = await fetch(strUrl);
         const responseData = await response.json();
         if (responseData.status === 'success') {
@@ -127,7 +126,7 @@ export const useGetNFTDetail = baseID => {
     };
 
     fetchData();
-  }, [setData, baseID]);
+  }, [setData, tokenId]);
 
   return data;
 };

@@ -1,38 +1,17 @@
 import { Contract } from '@ethersproject/contracts'
-import NanaiNFTABI from 'contracts/NanaiNFT.json'
+import KeySwapNFTABI from 'contracts/KeySwapNFT.json'
 
 export const Networks = {
-  MainNet: 56,
-  Testnet: 97,
-  Rinkeby: 4,
-  Kovan: 42,
+  MainNet: 56
 }
 
 export const CONTRACTS_BY_NETWORK = {
   [Networks.MainNet]: {
-    NanaiNFT: {
-      address: '0x495a3512678ad8c68592eef58bd7b4996fab2e36',
-      abi: NanaiNFTABI,
+    KeySwapNFT: {
+      address: '0x11110314DC52400654551F7d21c18aF79aD259A2',
+      abi: KeySwapNFTABI,
     }
-  },
-  [Networks.Testnet]: {
-    NanaiNFT: {
-      address: '0x791d3D1b83dA4fdCc03e67393d78028e19771116',
-      abi: NanaiNFTABI,
-    }
-  },
-  [Networks.Rinkeby]: {
-    NanaiNFT: {
-      address: '0xE41367745bfA0fCeBDaB4840ED8ED7364F894943',
-      abi: NanaiNFTABI,
-    }
-  },
-  [Networks.Kovan]: {
-    NanaiNFT: {
-      address: '0x6296af0f175b2e76e953ed3450ae5d16a460cfd5',
-      abi: NanaiNFTABI,
-    }
-  },
+  }
 }
 
 export const currentNetwork = process.env.REACT_APP_NETWORK_ID;

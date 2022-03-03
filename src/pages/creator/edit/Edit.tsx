@@ -23,7 +23,7 @@ import { Web3Provider } from '@ethersproject/providers';
 import { useProfile } from 'state/hooks';
 import { truncateWalletString } from 'utils';
 import toast from 'react-hot-toast';
-import { getImageIpfsHash, readFileAsync } from 'utils/ipfs';
+import { getIpfsHashFromFile } from 'utils/ipfs';
 
 export default function Edit() {
   const history = useHistory();
@@ -90,15 +90,13 @@ export default function Edit() {
       var user_background_url = profile.userBackgroupUrl;
 
       if (avatarImage) {
-        const buffer = await readFileAsync(avatarImage);
-        const hash = await getImageIpfsHash(buffer);
-        user_avatar_url = `https://ipfs.io/ipfs/${hash}`;
+        const hash = await getIpfsHashFromFile(avatarImage);
+        user_avatar_url = `https://keyswap.mypinata.cloud/ipfs/${hash}`;
       }
 
       if (backgroundImage) {
-        const buffer = await readFileAsync(backgroundImage);
-        const hash = await getImageIpfsHash(buffer);
-        user_background_url = `https://ipfs.io/ipfs/${hash}`;
+        const hash = await getIpfsHashFromFile(backgroundImage);
+        user_background_url = `https://keyswap.mypinata.cloud/ipfs/${hash}`;
       }
 
       data.wallet_address = profile.walletAddress;

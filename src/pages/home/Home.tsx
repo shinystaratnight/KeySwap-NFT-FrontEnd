@@ -34,7 +34,7 @@ export const Home = () => {
   const history = useHistory();
 
   function goToDetails(product: NFTObjectData) {
-    history.push(`/details/${product.baseID}`);
+    history.push(`/details/${product.tokenID}`);
   }
 
   const [NFTObjectList, setNFTObjectList] = useState<NFTObjectData[]>([]);
@@ -47,7 +47,7 @@ export const Home = () => {
   const [filterValue, setFilterValue] = useState('Default');
 
   function isAlreadyAdded(item: NFTObjectData) {
-    return NFTObjectList?.find(list => list.baseID === item.baseID);
+    return NFTObjectList?.find(list => list.tokenID === item.tokenID);
   }
 
   const items = useGetNFTList({

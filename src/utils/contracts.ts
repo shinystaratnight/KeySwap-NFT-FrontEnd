@@ -4,9 +4,9 @@ import toast from 'react-hot-toast';
 import { getContractObj } from '.';
 
 export async function mint(chainId, provider, account, tokenURI, nft_price) {
-  const nftContract = getContractObj('NanaiNFT', chainId, provider);
+  const nftContract = getContractObj('KeySwapNFT', chainId, provider);
   try {
-    const tx = await nftContract.mint(tokenURI, account, nft_price);
+    const tx = await nftContract.mint(tokenURI, account, nft_price, true);
     await tx.wait(1);
 
     return tx.hash;
@@ -18,7 +18,7 @@ export async function mint(chainId, provider, account, tokenURI, nft_price) {
 
 export async function buy(chainId, provider, tokenID, price) {
   console.log({ chainId, provider, tokenID, price });
-  const nftContract = getContractObj('NanaiNFT', chainId, provider);
+  const nftContract = getContractObj('KeySwapNFT', chainId, provider);
   try {
     const tx = await nftContract.buy(tokenID, {
       value: ethers.utils.parseEther(price),
@@ -34,7 +34,7 @@ export async function buy(chainId, provider, tokenID, price) {
 }
 
 export async function updatePrice(chainId, provider, tokenID, nft_price) {
-  const nftContract = getContractObj('NanaiNFT', chainId, provider);
+  const nftContract = getContractObj('KeySwapNFT', chainId, provider);
   try {
     const tx = await nftContract.updatePrice(tokenID, ethers.utils.parseEther(nft_price));
     await tx.wait(1);
@@ -47,7 +47,7 @@ export async function updatePrice(chainId, provider, tokenID, nft_price) {
 }
 
 export async function updateListingStatus(chainId, provider, tokenID, shouldBeListed) {
-  const nftContract = getContractObj('NanaiNFT', chainId, provider);
+  const nftContract = getContractObj('KeySwapNFT', chainId, provider);
   try {
     const tx = await nftContract.updateListingStatus(tokenID, shouldBeListed);
     await tx.wait(1);
@@ -60,7 +60,7 @@ export async function updateListingStatus(chainId, provider, tokenID, shouldBeLi
 }
 
 export async function burn(chainId, provider, tokenID) {
-  const nftContract = getContractObj('NanaiNFT', chainId, provider);
+  const nftContract = getContractObj('KeySwapNFT', chainId, provider);
   try {
     const tx = await nftContract.burn(tokenID);
     await tx.wait(1);
