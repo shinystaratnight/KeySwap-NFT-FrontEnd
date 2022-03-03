@@ -24,7 +24,8 @@ function App() {
     <>
       <Toaster position="top-center" toastOptions={{ success: { duration: 3000 }, error: { duration: 3000 } }} />
       <div className="app">
-        <Router basename={process.env.PUBLIC_URL}>
+        {/* <Router basename={process.env.PUBLIC_URL}> */}
+        <Router>
           <ScrollToTop />
           <Header />
           <div className="body">
