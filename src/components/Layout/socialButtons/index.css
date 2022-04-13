@@ -1,0 +1,17 @@
+
+.social-buttons{
+  width: fit-content;
+  margin: auto;
+  line-height: 0;
+  display: flex;
+}
+.social-buttons>div{
+  padding:5px;
+  border-radius: 50%;
+}
+.social-buttons>div:hover{
+  background-color: #ffffff26;
+}
+.social-buttons img{
+  width: 15px;
+}
