@@ -9,7 +9,7 @@ export const currentNetwork = process.env.REACT_APP_NETWORK_ID;
 export const CONTRACTS_BY_NETWORK = {
   [currentNetwork]: {
     NFTCollection: {
-      address: "0x8560c0d7b9f9bb507050aaccc43699fb4f7fecb0",
+      address: "0x30D8ca4A66e93D2a46F230CD783C7c426c144223",
       abi: NFTCollectionABI,
     },
     Market: {
