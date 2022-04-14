@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useWeb3React } from '@web3-react/core'
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
@@ -76,6 +76,7 @@ function Create(props) {
             createItem(
                 collectionAddr,
                 tokenUri,
+                mintPrice,
                 chainId,
                 library.getSigner()
             ).then((result) => {
@@ -154,7 +155,7 @@ function Create(props) {
                             <Element.Input value={description} placeholder="e.g. 'After purchasing you`ll be able to get the real T-shirt" onChange={event => setDescription(event.target.value)} />
                         </Element.Field>
                         <Element.Field>
-                            <Element.label>Price: <span> {mintPrice} BNB</span></Element.label>
+                            <Element.label>Price: {mintPrice} BNB</Element.label>
                         </Element.Field>
                         <Element.Actions>
                             <Element.CreateBtn onClick={() => onCreateItem()} >
