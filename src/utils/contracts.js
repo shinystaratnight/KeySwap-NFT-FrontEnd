@@ -153,11 +153,10 @@ export async function getCreationPrice(collection, chainId, provider) {
 /**
  * Create Item
  */
-export async function createItem(collection, uri, chainId, provider) {
+export async function createItem(collection, uri, mintPrice, chainId, provider) {
     const collectionContract = getCollectionContract(collection, chainId, provider);
     try {
-        const price = await collectionContract.mintPrice()
-        const tx = await collectionContract.mintTo(uri, { value: price })
+        const tx = await collectionContract.mintTo(uri, { value: toWei(mintPrice).toJSON() })
         const receipt = await tx.wait(2);
         if (receipt.confirmations) {
             return true
