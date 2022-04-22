@@ -10,191 +10,32 @@ import { Mail } from "@styled-icons/feather/Mail";
 import { Twitter } from "@styled-icons/bootstrap/Twitter";
 import { Telegram } from "@styled-icons/bootstrap/Telegram";
 
-
-export const Container = styled.div`
-    display: block;
-    color: #1E2026;
-    margin 48px auto;
-    max-width: 1200px;
-  @media (min-width: 1200px){
-    display flex;
-  }
-`;
-
-export const ImageContainer = styled.div`
-    padding: 0 12px;
-    @media (min-width: 1200px){
-      padding: 0;
-    }
-`;
-
-export const ImageContent = styled.div`
-    position: relative;    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`;
-
-export const NftImage = styled.img`
-    width: 320px;
-    border-radius: 8px;
-    @media (min-width: 768px){
-        width: 586px;        
-    }
-`;
-
-export const NftVideo = styled.video`
-    width: 320px;
-    border-radius: 8px;
-    @media (min-width: 768px){
-        width: 586px;        
-    }
-`;
-
-export const NftAudio = styled.audio`
-    position: relative;
-    bottom: 20px; 
-    display: flex;
-    width: 320px;
-    height: 25px;
-    border-radius: 8px;
-    margin: auto;
-    @media (min-width: 768px){
-        width: 586px;
-        height: 25px;
-    }
-`;
-
-
-export const NftType = styled.div`
-    margin-top: 8px;
-    color: grey;
-    text-transform: capitalize;
-`;
-
-export const AddressContainer = styled.div`
-    margin-top: 24px;
-`;
-
 export const label = styled.div`
     font-size: 14px;
     margin-bottom: 4px;
     color: grey;
 `;
 
-export const Address = styled.div`
-    display: flex;
-    align-items: center;
-`;
-
-export const NftAddress = styled.a`
-    text-decoration: unset;
-    color: #1E2026;
-    font-size: 12px;
-`;
-
-export const NftNetwork = styled.div`
-    padding: 4px 8px;
-    background: #f1f1f1;
-    color: #1E2026;
-    font-size: 12px;
-    border-radius: 4px;
-    margin-left: 12px;
-`;
-
-export const TokenIdContainer = styled.div`
-    margin-top: 24px;
-`;
-
-export const TokenId = styled.div`
-
-`;
-
-export const DetailContainer = styled.div`
-    margin-left: 0;
-    padding: 12px;
-        
-    flex-grow: 1;
-    @media (min-width: 1200px){
-        margin-left: 40px;
-      padding: 0;
-    }
-`;
-
-export const Header = styled.div`
-    display: flex;
-    justify-content: space-between;
-`;
-
-export const HeaderLeft = styled.div`
-    display: flex;
-    align-items: center;
-`;
-
-export const Collection = styled.div`
-    margin-top: 20px;
-`;
-
-export const CollectionCaption = styled.div`
-    font-weight: bold;
-    margin-bottom: 12px; 
-`;
-
-export const CollectionContainer = styled.div`
-    display: flex;
-    align-items: center;
-`;
-
-export const CollectionImage = styled.img`
-    width: 30px;
-    height: 30px;
-    border-radius: 24px;
-`;
-
-export const CollectionTitle = styled.div`
-    font-weight: bold;
-    font-size: 16px;
-    margin-left: 20px;
-`;
-
-export const NftTitle = styled.div`
-    font-size: 20px;
-    font-weight: bold;
-`;
-
-export const NftCategory = styled.div`
-    padding: 4px 8px;
-    background: #f1f1f1;
-    color: #1E2026;
-    font-size: 12px;
-    border-radius: 4px;
-    margin-left: 12px;
-`;
-
 export const HeaderRight = styled.div`
-    display: flex;
-    align-items: center;
-    position: relative;
+	display: flex;
+	align-items: center;
+	position: relative;
 `;
 
 export const DropDownMenus = styled.div`
-    background: white;
-    width: 240px;
-    position: absolute;
-    bottom: -144px;
-    box-shadow: rgb(0 0 0 / 10%) 0px 0px 15px;
-    right: 0;
+	background: white;
+	width: 240px;
 `;
 
 export const DropDownMenu = styled.div`
-    padding 12px 24px;
-    cursor: pointer;
-    display: flex;
-    font-size: 14px;
-    align-items: center;
-    &:hover {
-        background-color: #e3e3e3;
-    }
+	padding 12px 24px;
+	cursor: pointer;
+	display: flex;
+	font-size: 14px;
+	align-items: center;
+	&:hover {
+		background-color: #e3e3e3;
+	}
 `;
 
 export const TelegramIcon = styled(Telegram)`
@@ -210,9 +51,10 @@ export const EmailIcon = styled(Mail)`
 `;
 
 export const Favorite = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	cursor: pointer;
 `;
 export const FavouritesCount = styled.div`
     font-size: 10px;
@@ -228,8 +70,9 @@ export const LoveIcon = styled(Heart)`
 `;
 
 export const ShareIcon = styled(ShareSocial)`
-    margin-left: 12px;    
-    margin-bottom: 4px;
+	margin-left: 12px;    
+	margin-bottom: 4px;
+	cursor: pointer;
 `;
 
 export const OwnerContainer = styled.div`
@@ -326,11 +169,10 @@ export const UsdPrice = styled.span`
 `;
 
 export const ActionContainer = styled.div`
-    display: block;
-    margin-top: 20px;
-  @media (min-width: 480px){
-    display flex;
-  }
+	gap: 30px;
+	display: flex;
+	margin-bottom: 10px;
+	flex-wrap: wrap;	
 `;
 
 export const Action = styled.div`
@@ -528,8 +370,30 @@ export const ProvenanceTime = styled.div`
 `;
 
 // Modal
+// Modal
 export const ModalBody = styled.div`
-  padding: 4px 0px;
+  padding: 8px 12px;
+  background-color: white;
+  border-radius: 7px;
+  padding: 20px;
+  outline: none !important;
+  width: 95vw;
+  max-width: 500px;
+	position: relative;
+	&:hover {
+    box-shadow: 0 0 5px #fff;
+    .top-left {
+      width: 4rem;
+      height: 3rem;
+    }
+    .bottom-right {
+      width: 4rem;
+      height: 3rem;
+    }
+    .middle-border {
+      width: 5rem;
+    }
+  }
 `;
 
 export const ModalHeader = styled.div`
@@ -537,6 +401,7 @@ export const ModalHeader = styled.div`
 `;
 
 export const ModalCloseIcon = styled(Close)`
+	cursor: pointer;
 `;
 
 export const ModalTitle = styled.div`
@@ -574,7 +439,7 @@ export const ModalMainPrice = styled.input`
     font-size: 30px;
     line-height: 40px;
     flex-grow: 1;
-    width: 250px;
+    width: 30%;
     text-align: center;
     border: unset;
     outline: none;
@@ -602,33 +467,46 @@ export const ModalActions = styled.div`
   margin-top: 30px;
   width: 100%;
   text-align: center;
+	flex-wrap: wrap;
 `;
 
 export const ModalButton = styled.div`
-    background-image: linear-gradient(rgb(215 169 146) 0%,rgb(187 135 108) 100%);
-    padding: 16px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
+	background: var(--colorOrange);
+	padding: 16px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: bold;
+	color: white;
 `;
 
 export const ModalCancelButton = styled.div`
-    background-image: linear-gradient(rgb(219 219 219) 0%,rgb(184 184 184) 100%);
-    padding: 16px 20px;
-    margin-right: 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 160px
+	background: transparent;
+	padding: 16px 20px;
+	margin-right: 12px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: bold;
+	width: 160px;
+	border: 2px solid var(--colorOrange);
+	color: var(--colorOrange);
+	@media screen and (max-width: 375px) {
+		width: 100%;
+		margin-right: 0;
+		margin-bottom: 16px;
+	}
 `;
 
 export const ModalSubmitButton = styled.div`
-    background-image: linear-gradient(rgb(215 169 146) 0%,rgb(187 135 108) 100%);
-    padding: 16px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 160px
+	background: var(--colorOrange);
+	padding: 16px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: bold;
+	width: 160px;
+	color: white;
+	@media screen and (max-width: 375px) {
+		width: 100%;
+	}
 `;
 
 
@@ -915,10 +793,10 @@ export const ItemOtherInfo = styled.li`
 	margin-bottom: 20px;
 	align-items: center;
 	display: flex;
-	flex-wrap: wrap;
+	flex-wrap: wrap;	
 `
 export const ItemInfoTitle = styled.div`
-	width: 30%;
+	width: 100%;
 	h6 {
 		color: #000;
 		font-size: 1.125rem;
@@ -933,10 +811,10 @@ export const ItemInfoTitle = styled.div`
 	@media screen and (min-width: 576px) {
 		width: 35%;
 		position: relative;
-	}
+	}	
 `
 export const ItemInfoDetails = styled.div`
-	width: 70%;
+	width: 100%;
 	p {
 		margin: 0;
 		color: #555;
@@ -946,7 +824,7 @@ export const ItemInfoDetails = styled.div`
     overflow: hidden;
 		span {
 			padding: 4px 8px;
-			background: #5138ee;
+			background: var(--colorOrange);
 			color: #fff;
 			font-size: 12px;
 			border-radius: 6px;			
@@ -962,4 +840,157 @@ export const ItemInfoDetails = styled.div`
 	@media screen and (min-width: 576px) {
 		width: 65%;	
 	}
+`
+export const ItemBuyPart = styled.div`
+	position: sticky;
+	top: 95px;
+	background: rgba(0,0,0,.07);
+	padding: 50px 30px;
+	border-radius: 10px;
+`
+export const NftItemTitle = styled.div`
+	margin-bottom: 30px;
+	display: flex;	
+	jusitfy-content: space-betwee;
+	align-items: baseline;
+	h3 {
+		color: #000;
+		width: calc(100% - 60px);	
+		font-size: calc(1.3125rem + 0.75vw);	
+		margin: 0;
+	}
+	@media screen and (min-width: 1200px) {
+		h3 {
+			font-size: 1.875rem;
+		}
+	}
+`
+export const ItemDetailsCountDown = styled.div`
+	margin-bottom: 40px;
+	h4 {
+		color: #000;
+		margin-bottom: 15px;
+		margin-top: 0;
+		font-size: calc(1.275rem + 0.3vw);
+	}
+	@media screen and (min-width: 1200px) {
+		h4 {
+			font-size: 1.5rem;
+		}		
+	}
+`
+export const ItemCountDownList = styled.ul`
+	gap: 15px;
+	display: flex;
+	flex-wrap: wrap;
+	list-style: none;
+	padding-left: 0;
+	margin-top: 0;
+	margin-bottom: 1rem;
+	li {
+		text-align: center;
+	}
+`
+export const CountValue = styled.span`
+	background-color: #fff !important;
+	padding: 10px 20px;
+	border-radius: 5px;
+	font-weight: 600;
+	display: block;
+	margin-bottom: 5px;
+	text-align: center;
+	font-size: calc(1.275rem + 0.3vw);
+	@media screen and (min-width: 1200px) {
+		font-size: 1.5rem;
+	}
+`
+export const CountLabel = styled.span`
+	text-align: center;
+	color: #555;
+	font-size: 1rem;
+`
+
+export const ItemPriceBox = styled.div`
+	margin-bottom: 40px;
+	h4 {
+		color: #000;
+		font-size: calc(1.275rem + 0.3vw);
+		margin-top: 0;
+		margin-bottom: 10px;
+	}
+	p {
+		margin-top: 0;
+    margin-bottom: 1rem;
+		color: #555;
+		font-size: calc(1.275rem + 0.3vw);
+	}
+	@media screen and (min-width: 1200px) {
+		h4 {
+			font-size: 1.5rem;
+		}
+		p {
+			font-size: 1.5rem;
+		}
+	}		
+`
+export const ActionBtn = styled.button`
+	border-radius: 5px;
+	color: #fff;
+	text-decoration: none;
+	font-size: 1rem;
+	transform-origin: right;
+	transition: all .3s ease;
+	background: var(--colorOrange);
+	font-weight: bold;
+	display: ${props => props.hidden ? 'none' : 'inline-block'};
+	overflow: hidden;
+	padding: 0 1.7rem;
+	position: relative;
+	line-height: 40px;
+	cursor: pointer;
+	border: 0;
+	outline: 0;	
+	@media screen and (min-width: 768px) {
+		padding: 0 2.25rem;
+		line-height: 50px;
+	}
+	&:hover {
+		color: var(--colorOrange);
+		transform: translateY(-3px);
+		background: #fff;	
+	}
+`
+export const TopLeftCorner = styled.div`
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  transition: all .3s ease;
+  border-top: 3px solid var(--colorOrange);
+  border-left: 3px solid var(--colorOrange);
+  top: -3px;
+  left: -3px;
+  border-top-left-radius: 10px;
+`
+export const BottomRightRadius = styled.div`
+  border-bottom: 3px solid var(--colorOrange);
+  border-right: 3px solid var(--colorOrange);
+  bottom: -3px;
+  right: -3px;
+  border-bottom-right-radius: 10px;
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  transition: all .3s ease;
+`
+export const MiddleBorder = styled.div`
+  width: 2rem; 
+  top: -3px;
+  border-bottom: 3px solid var(--colorOrange);
+  border-top: 3px solid var(--colorOrange);
+  position: absolute;
+  transition: all .3s ease;
+  left: 50%;
+  transform: translateX(-50%);
+  height: calc(100% + 6px);
+	z-index: -1;
 `
