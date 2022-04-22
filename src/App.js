@@ -21,6 +21,7 @@ import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import Detail from "./pages/Detail";
 import Home from "./pages/Home";
+import Explore from 'pages/Explore'
 
 function App() {   
 
@@ -115,6 +116,7 @@ function App() {
       <Router>
         <Switch>          
           <Route path="/" exact render={(props) => (<Layout {...props} connectAccount={connectAccount}><Home {...props} user={user}/></Layout>)}/>
+          <Route path="/explore" exact render={(props) => (<Layout {...props} connectAccount={connectAccount}><Explore {...props} user={user}/></Layout>)}/>
           <Route path="/create" exact render={(props) => (<Layout {...props} connectAccount={connectAccount}><Create {...props} user={user}/></Layout>)}/>
           <Route path="/profile/:id" exact render={(props) => (<Layout {...props} connectAccount={connectAccount}><Profile {...props} getUser={getUser} user={user} login={login}/></Layout>)}/>
           <Route path="/edit_profile" exact render={(props) => (<Layout {...props} connectAccount={connectAccount}><EditProfile {...props} getUser={getUser} user={user} login={login}/></Layout>)}/>
