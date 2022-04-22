@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 import { GridContainer, GridItem } from 'components/Grid'
+import PageHeader from 'components/PageHeader'
 import ExploreItem from 'components/ExploreItem'
 import * as Element from "./styles";
 
@@ -102,13 +103,7 @@ const Explore = () => {
 
   return (
     <div>
-      <Element.Header>
-        <GridContainer>
-          <Element.PageTitle>
-            Explore All NFT's
-          </Element.PageTitle>
-        </GridContainer>
-      </Element.Header>
+      <PageHeader title="Explore All NFT's" />
 
       <Element.ExploreSection>
         <GridContainer>

@@ -112,7 +112,7 @@ function App() {
   }
 
   return (
-    <React.Fragment>        
+    <React.Fragment>
       <Router>
         <Switch>          
           <Route path="/" exact render={(props) => (<Layout {...props} connectAccount={connectAccount}><Home {...props} user={user}/></Layout>)}/>

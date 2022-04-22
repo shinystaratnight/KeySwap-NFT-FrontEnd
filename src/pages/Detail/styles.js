@@ -1,14 +1,14 @@
 import styled from 'styled-components';
-import {Heart} from "@styled-icons/feather/Heart";
-import {ShareSocial} from "@styled-icons/ionicons-outline";
-import {Close} from "@styled-icons/material/Close";
-import {Info} from "@styled-icons/material/Info";
-import {AccessTimeFilled} from "@styled-icons/material";
-import {Tag} from "@styled-icons/fa-solid/Tag";
-import {Heart as HeartFill} from "@styled-icons/fa-solid/Heart";
-import {Mail} from "@styled-icons/feather/Mail";
-import {Twitter} from "@styled-icons/bootstrap/Twitter";
-import {Telegram} from "@styled-icons/bootstrap/Telegram";
+import { Heart } from "@styled-icons/feather/Heart";
+import { ShareSocial } from "@styled-icons/ionicons-outline";
+import { Close } from "@styled-icons/material/Close";
+import { Info } from "@styled-icons/material/Info";
+import { AccessTimeFilled } from "@styled-icons/material";
+import { Tag } from "@styled-icons/fa-solid/Tag";
+import { Heart as HeartFill } from "@styled-icons/fa-solid/Heart";
+import { Mail } from "@styled-icons/feather/Mail";
+import { Twitter } from "@styled-icons/bootstrap/Twitter";
+import { Telegram } from "@styled-icons/bootstrap/Telegram";
 
 
 export const Container = styled.div`
@@ -780,3 +780,186 @@ export const StartingDateSelect = styled.select`
 export const OrderByOption = styled.option`
     
 `;
+
+export const DetailsSection = styled.div`
+	padding: 80px 0 75px;
+	& > div {
+		padding-right: 16px;
+		padding-left: 16px;
+	}
+  @media screen and (min-width: 992px) {
+		padding: 120px 0 115px;
+	}
+	@media screen and (max-width: 991px) and (min-width: 768px) {
+		& > div {
+			max-width: 720px;
+		}
+	}
+`
+export const GridRow = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: -32px;
+	margin-right: -16px;
+	margin-left: -16px;
+	& > div {
+		padding-right: 16px;
+    padding-left: 16px;
+    margin-top: 32px;
+	}
+`
+export const ItemDescPart = styled.div`
+
+`
+export const ItemDescThumb = styled.div`
+	margin-bottom: 40px;
+	@media screen and (min-width: 992px) {
+		margin-bottom: 50px;
+	}
+	img {
+		border-radius: 10px;
+    margin: auto;
+		display: block;
+	}
+`
+export const ItemDescContent = styled.div`
+
+`
+export const TabList = styled.div`
+	background: rgba(0,0,0,.07);
+	border-bottom: none;
+	padding-block: 5px;
+	margin-bottom: 25px;
+	display: flex;
+	flex-wrap: wrap;
+	padding-left: 0;
+`
+export const TabButton = styled.button`
+	color: ${props => props.active ? '#5138ee' : '#000'};
+	border: 0;
+	outline: none;
+	box-shadow: none;
+	font-weight: 500;
+	position: relative;
+	cursor: pointer;
+	margin-bottom: -1px;
+  background: 0 0;
+	border-radius: 0;
+	display: block;
+  padding: 0.5rem 1rem;
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+	&::after {
+		border-color: transparent transparent #fff transparent;
+		bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 8px 10px 8px;
+		position: absolute;
+    content: "";
+		display: ${props => props.active ? 'block' : 'none'}
+	}
+`
+export const DetailsTab = styled.div`
+	display: ${props => props.show ? 'block' : 'none'};	
+	color: #555;
+	p {
+		margin-bottom: 20px;
+		margin-top: 0;
+	}
+	& .text-center {
+		text-align: center;
+	}
+	@media screen and (min-width: 992px) {
+		p {
+			max-width: 95%;
+		}
+	}
+`
+export const AuthorProfile = styled.div`
+	margin-bottom: 25px;
+	gap: 15px;
+	align-items: center;
+	flex-wrap: wrap;
+	display: flex;
+`
+export const AuthorThumb = styled.div`
+	width: 60px;
+	height: 60px;
+	img {
+		border-radius: 50%;
+    border: 2px solid #030010;
+		max-width: 100%;
+    height: auto;
+	}
+`
+export const AuthorInfo = styled.div`
+	p {
+		margin: 0;
+	}
+	h6 {
+		color: #000;
+		font-size: 1.125rem;
+		margin: 0;
+	}
+`
+export const OtherInfoList = styled.ul`
+	list-style: none;
+	padding-left: 0;
+	margin-top: 0;
+  margin-bottom: 1rem;
+`
+export const ItemOtherInfo = styled.li`
+	margin-bottom: 20px;
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+`
+export const ItemInfoTitle = styled.div`
+	width: 30%;
+	h6 {
+		color: #000;
+		font-size: 1.125rem;
+		margin: 0;
+	}
+	&::after {
+		content: ":";
+    right: 10px;
+    top: 0;
+		position: absolute;
+	}
+	@media screen and (min-width: 576px) {
+		width: 35%;
+		position: relative;
+	}
+`
+export const ItemInfoDetails = styled.div`
+	width: 70%;
+	p {
+		margin: 0;
+		color: #555;
+		position: relative;
+		padding-right: 40px;
+		text-overflow: ellipsis;
+    overflow: hidden;
+		span {
+			padding: 4px 8px;
+			background: #5138ee;
+			color: #fff;
+			font-size: 12px;
+			border-radius: 6px;			
+			position: absolute;
+			right: 0;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	}
+	.cursor-pointer {
+		cursor: pointer;
+	}
+	@media screen and (min-width: 576px) {
+		width: 65%;	
+	}
+`

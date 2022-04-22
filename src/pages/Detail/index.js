@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { useWeb3React } from '@web3-react/core'
 import axios from 'axios'
 import Querystring from 'query-string'
@@ -9,6 +9,9 @@ import Snackbar from '@material-ui/core/Snackbar';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+import PageHeader from 'components/PageHeader'
+import { GridContainer, GridItem } from 'components/Grid'
 
 import History from "./history";
 import Provenance from "./provenance";
@@ -121,6 +124,7 @@ function Detail(props) {
 	useEffect(() => {
 		if (item?.auction) setInterval(() => setNewTime(), 1000);
 	}, [item]);
+
 	const setNewTime = () => {
 		const currentTimestamp = new Date().getTime()
 		let countdownDate = 0;
@@ -243,6 +247,7 @@ function Detail(props) {
 		});
 
 	}
+
 	function unlistItem() {
 		setDelistingStatus(true)
 
@@ -267,6 +272,7 @@ function Detail(props) {
 
 
 	}
+
 	function buyItem() {
 		if (balance < item.pair.price) {
 			setShowBuyNowModal(false)
@@ -298,7 +304,6 @@ function Detail(props) {
 			}
 		});
 	}
-
 
 	function putAuction() {
 		if (putPrice <= 0) {
@@ -381,6 +386,7 @@ function Detail(props) {
 			}
 		});
 	}
+
 	function endAuction() {
 		setEndingAuctionStatus(true)
 
@@ -404,6 +410,7 @@ function Detail(props) {
 		});
 
 	}
+
 	function placeBid() {
 
 		if (!(item?.auction.bids) && (bidPrice - item.auction.price < 0)) {
@@ -450,519 +457,603 @@ function Detail(props) {
 		});
 
 	}
+
 	function closePlaceBidModal() {
 		setShowPlaceBidModal(false)
 		setBidPrice(0)
 	}
 
 	return (
-		<Element.Container>
-			<Element.ImageContainer>
-				<Element.ImageContent>
-					<Element.NftImage src={item?.image} />
-				</Element.ImageContent>
-				<Element.AddressContainer>
-					<Element.label>Contract Address</Element.label>
-					<Element.Address>
-						<Element.NftAddress
-							href={`https://bscscan.com/address/${item?.itemCollection}`}
-							target={"_blank"}>{item?.itemCollection}</Element.NftAddress>
-						<Element.NftNetwork>BSC</Element.NftNetwork>
-					</Element.Address>
-				</Element.AddressContainer>
-				<Element.TokenIdContainer>
-					<Element.label>Token ID</Element.label>
-					<Element.TokenId>{item?.tokenId}</Element.TokenId>
-				</Element.TokenIdContainer>
-			</Element.ImageContainer>
-			<Element.DetailContainer>
-				<Element.Header>
-					<Element.HeaderLeft>
-						<Element.NftTitle>{item?.name}</Element.NftTitle>
-					</Element.HeaderLeft>
-					<Element.HeaderRight>
-						<Element.Favorite onClick={() => clickFavorite()}>
-							{
-								didLike ?
-									<Element.LoveFillIcon size={20} />
-									: <Element.LoveIcon size={20} />
-							}
-							<Element.FavouritesCount>{localLikeCount}</Element.FavouritesCount>
-						</Element.Favorite>
-						<Element.ShareIcon size={24} onClick={() => setShowDropDown(true)} />
-						{
-							showDropDown &&
-							<Element.DropDownMenus>
-								<TwitterShareButton url={base_url + location.pathname} style={{ width: "100%" }}>
-									<Element.DropDownMenu onClick={() => shareTwitter()}><Element.TwitterIcon size={14} />Twitter</Element.DropDownMenu>
-								</TwitterShareButton>
-								<TelegramShareButton url={base_url + location.pathname} style={{ width: "100%" }}>
-									<Element.DropDownMenu onClick={() => shareTelegram()}><Element.TelegramIcon size={14} />Telegram</Element.DropDownMenu>
-								</TelegramShareButton>
-								<EmailShareButton url={base_url + location.pathname} style={{ width: "100%" }}>
-									<Element.DropDownMenu onClick={() => shareEmail()}><Element.EmailIcon size={14} />Email</Element.DropDownMenu>
-								</EmailShareButton>
-							</Element.DropDownMenus>
-						}
-					</Element.HeaderRight>
-				</Element.Header>
-				<Element.OwnerContainer>
-					<Element.Owners>
-						<Element.Owner>
-							<Element.CreatorImage src={item?.ownerUser.profilePic} onClick={() => props.history.push(`/profile/${item?.ownerUser.address}`)} />
-							<Element.CreatorContent>
-								<Element.UserOptionText>Owner</Element.UserOptionText>
-								<Element.CreatorName>{item?.ownerUser.name}</Element.CreatorName>
-							</Element.CreatorContent>
-						</Element.Owner>
-					</Element.Owners>
-					<Element.Caption>
-						{item?.description}
-					</Element.Caption>
-				</Element.OwnerContainer>
-				{
-					item?.auction ?
-						<Element.StatusContainer>
-							<Element.CurrentBid>
-								<Element.OptionText>Current Bid</Element.OptionText>
-								<Element.OptionContent>
-									<Element.PriceContainer>
-										<Element.Price>{formatNum(item?.auction?.price)}</Element.Price>
+		<div>
+			<PageHeader title='Item Details Page' />
+			<Element.DetailsSection>
+				<GridContainer>
+					<Element.GridRow>
+						<GridItem xl={6} lg={6} md={12} sm={12}>
+							<Element.ItemDescPart>
+								<Element.ItemDescThumb>
+									<img loading="lazy" src={item?.image} alt='Item-img' />
+								</Element.ItemDescThumb>
+								<Element.ItemDescContent>
+									<Element.TabList>
+										<Element.TabButton active={curTab === 'detail'} onClick={() => setCurTab('detail')}>
+											Details
+										</Element.TabButton>
 										{
-											currencyInfo &&
-											<Element.Unit>{currencyInfo?.symbol}</Element.Unit>
+											item?.auction && (
+												<Element.TabButton active={curTab === 'bid_history'} onClick={() => setCurTab('bid_history')}>
+													Bids
+												</Element.TabButton>
+											)
 										}
 
-									</Element.PriceContainer>
-								</Element.OptionContent>
-							</Element.CurrentBid>
-							<Element.BidTime>
-								<Element.OptionText>{auctionStatusMessage}</Element.OptionText>
-								<Element.Times>
-									<Element.Time>
-										<Element.TimeValue>{state.days || '00'}</Element.TimeValue>
-									</Element.Time>
-									<Element.Time>
-										<Element.TimeValue>{state.hours || '00'}</Element.TimeValue>
-									</Element.Time>
-									<Element.Time>
-										<Element.TimeValue>{state.minutes || '00'}</Element.TimeValue>
-									</Element.Time>
-									<Element.Time>
-										<Element.TimeValue>{state.seconds || '00'}</Element.TimeValue>
-									</Element.Time>
-								</Element.Times>
-							</Element.BidTime>
-						</Element.StatusContainer>
-						:
-						item?.pair ?
+										<Element.TabButton active={curTab === 'provenance'} onClick={() => setCurTab('provenance')}>
+											Activities
+										</Element.TabButton>
+									</Element.TabList>
+									<div className="tab-content">
+										<Element.DetailsTab show={curTab === 'detail'}>
+											<p>
+												{item?.description}
+											</p>
+											<Element.AuthorProfile>
+												<Element.AuthorThumb>
+													<Link to={`/profile/${item?.ownerUser.address}`}>
+														<img src={item?.ownerUser.profilePic} alt='Author' />
+													</Link>
+												</Element.AuthorThumb>
+												<Element.AuthorInfo>
+													<p>Owner</p>
+													<h6>{item?.ownerUser.name}</h6>
+												</Element.AuthorInfo>
+											</Element.AuthorProfile>
+											<Element.OtherInfoList>
+												<Element.ItemOtherInfo>
+													<Element.ItemInfoTitle>
+														<h6>Contact Address</h6>
+													</Element.ItemInfoTitle>
+													<Element.ItemInfoDetails>
+														<p className="cursor-pointer" onClick={() => window.open(`https://bscscan.com/address/${item?.itemCollection}`, '_blank')}>
+															{item?.itemCollection}
+															<span>BSC</span>
+														</p>
+													</Element.ItemInfoDetails>
+												</Element.ItemOtherInfo>
+
+												<Element.ItemOtherInfo>
+													<Element.ItemInfoTitle>
+														<h6>Token ID</h6>
+													</Element.ItemInfoTitle>
+													<Element.ItemInfoDetails>
+														<p>{item?.tokenId}</p>
+													</Element.ItemInfoDetails>
+												</Element.ItemOtherInfo>
+											</Element.OtherInfoList>
+										</Element.DetailsTab>
+
+										<Element.DetailsTab show={curTab === 'bid_history'}>
+											<p className="text-center m-0">
+												No active bids yet. Be the first to make a bid!
+											</p>
+											<Element.InfoList>
+												{
+													item?.auction.bids?.map((bid, index) => <History key={index} {...props} bid={bid} />)
+												}
+											</Element.InfoList>
+
+										</Element.DetailsTab>
+
+										<Element.DetailsTab show={curTab === 'provenance'}>
+											<Element.InfoList>
+												{
+													item?.events.map((event, index) => <Provenance key={index} {...props} event={event} />)
+												}
+											</Element.InfoList>
+										</Element.DetailsTab>
+									</div>
+								</Element.ItemDescContent>
+							</Element.ItemDescPart>
+						</GridItem>
+						<GridItem xl={6} lg={6} md={12} sm={12}>
+							ddd
+						</GridItem>
+					</Element.GridRow>
+				</GridContainer>
+			</Element.DetailsSection>
+
+
+
+			<Element.Container>
+
+				<Element.DetailContainer>
+					<Element.Header>
+						<Element.HeaderLeft>
+							<Element.NftTitle>{item?.name}</Element.NftTitle>
+						</Element.HeaderLeft>
+						<Element.HeaderRight>
+							<Element.Favorite onClick={() => clickFavorite()}>
+								{
+									didLike ?
+										<Element.LoveFillIcon size={20} />
+										: <Element.LoveIcon size={20} />
+								}
+								<Element.FavouritesCount>{localLikeCount}</Element.FavouritesCount>
+							</Element.Favorite>
+							<Element.ShareIcon size={24} onClick={() => setShowDropDown(true)} />
+							{
+								showDropDown &&
+								<Element.DropDownMenus>
+									<TwitterShareButton url={base_url + location.pathname} style={{ width: "100%" }}>
+										<Element.DropDownMenu onClick={() => shareTwitter()}><Element.TwitterIcon size={14} />Twitter</Element.DropDownMenu>
+									</TwitterShareButton>
+									<TelegramShareButton url={base_url + location.pathname} style={{ width: "100%" }}>
+										<Element.DropDownMenu onClick={() => shareTelegram()}><Element.TelegramIcon size={14} />Telegram</Element.DropDownMenu>
+									</TelegramShareButton>
+									<EmailShareButton url={base_url + location.pathname} style={{ width: "100%" }}>
+										<Element.DropDownMenu onClick={() => shareEmail()}><Element.EmailIcon size={14} />Email</Element.DropDownMenu>
+									</EmailShareButton>
+								</Element.DropDownMenus>
+							}
+						</Element.HeaderRight>
+					</Element.Header>
+					<Element.OwnerContainer>
+						<Element.Owners>
+							<Element.Owner>
+								<Element.CreatorImage src={item?.ownerUser.profilePic} onClick={() => props.history.push(`/profile/${item?.ownerUser.address}`)} />
+								<Element.CreatorContent>
+									<Element.UserOptionText>Owner</Element.UserOptionText>
+									<Element.CreatorName>{item?.ownerUser.name}</Element.CreatorName>
+								</Element.CreatorContent>
+							</Element.Owner>
+						</Element.Owners>
+						<Element.Caption>
+							{item?.description}
+						</Element.Caption>
+					</Element.OwnerContainer>
+					{
+						item?.auction ?
 							<Element.StatusContainer>
 								<Element.CurrentBid>
-									<Element.OptionText>Price</Element.OptionText>
+									<Element.OptionText>Current Bid</Element.OptionText>
 									<Element.OptionContent>
 										<Element.PriceContainer>
-											<Element.Price>{formatNum(item?.pair?.price)}</Element.Price>
+											<Element.Price>{formatNum(item?.auction?.price)}</Element.Price>
 											{
 												currencyInfo &&
 												<Element.Unit>{currencyInfo?.symbol}</Element.Unit>
 											}
-										</Element.PriceContainer>
 
+										</Element.PriceContainer>
 									</Element.OptionContent>
 								</Element.CurrentBid>
+								<Element.BidTime>
+									<Element.OptionText>{auctionStatusMessage}</Element.OptionText>
+									<Element.Times>
+										<Element.Time>
+											<Element.TimeValue>{state.days || '00'}</Element.TimeValue>
+										</Element.Time>
+										<Element.Time>
+											<Element.TimeValue>{state.hours || '00'}</Element.TimeValue>
+										</Element.Time>
+										<Element.Time>
+											<Element.TimeValue>{state.minutes || '00'}</Element.TimeValue>
+										</Element.Time>
+										<Element.Time>
+											<Element.TimeValue>{state.seconds || '00'}</Element.TimeValue>
+										</Element.Time>
+									</Element.Times>
+								</Element.BidTime>
 							</Element.StatusContainer>
 							:
-							<Element.StatusContainer>
-								<Element.CurrentBid>
-									<Element.OptionText>Not for sale</Element.OptionText>
-								</Element.CurrentBid>
-							</Element.StatusContainer>
-				}
-				<Element.ActionContainer>
-					{
-						item && props.user ?
-							<>
-								{item.ownerUser.address.toLowerCase() === props.user.address.toLowerCase() ?
-									<>
-										<Element.Action style={{ display: item?.auction || item?.pair ? "none" : "" }} onClick={() => setShowPutMarketPlace(true)}>Put on marketplace</Element.Action>
-										<Element.Action style={{ display: item?.auction ? "" : "none" }} onClick={() => setShowEndAuction(true)}>End Auction</Element.Action>
-										<Element.Action style={{ display: item?.pair ? "" : "none" }} onClick={() => setShowUnlistMarketPlace(true)}>Unlist on marketplace</Element.Action>
-									</>
-									:
-									<>
-										<Element.Action style={{ display: item?.auction && auctionStatus ? "" : "none" }} onClick={() => setShowPlaceBidModal(true)}>Place a Bid</Element.Action>
-										<Element.Action style={{ display: item?.pair ? "" : "none" }} onClick={() => setShowBuyNowModal(true)}>Buy Now</Element.Action>
-									</>
+							item?.pair ?
+								<Element.StatusContainer>
+									<Element.CurrentBid>
+										<Element.OptionText>Price</Element.OptionText>
+										<Element.OptionContent>
+											<Element.PriceContainer>
+												<Element.Price>{formatNum(item?.pair?.price)}</Element.Price>
+												{
+													currencyInfo &&
+													<Element.Unit>{currencyInfo?.symbol}</Element.Unit>
+												}
+											</Element.PriceContainer>
+
+										</Element.OptionContent>
+									</Element.CurrentBid>
+								</Element.StatusContainer>
+								:
+								<Element.StatusContainer>
+									<Element.CurrentBid>
+										<Element.OptionText>Not for sale</Element.OptionText>
+									</Element.CurrentBid>
+								</Element.StatusContainer>
+					}
+					<Element.ActionContainer>
+						{
+							item && props.user ?
+								<>
+									{item.ownerUser.address.toLowerCase() === props.user.address.toLowerCase() ?
+										<>
+											<Element.Action style={{ display: item?.auction || item?.pair ? "none" : "" }} onClick={() => setShowPutMarketPlace(true)}>Put on marketplace</Element.Action>
+											<Element.Action style={{ display: item?.auction ? "" : "none" }} onClick={() => setShowEndAuction(true)}>End Auction</Element.Action>
+											<Element.Action style={{ display: item?.pair ? "" : "none" }} onClick={() => setShowUnlistMarketPlace(true)}>Unlist on marketplace</Element.Action>
+										</>
+										:
+										<>
+											<Element.Action style={{ display: item?.auction && auctionStatus ? "" : "none" }} onClick={() => setShowPlaceBidModal(true)}>Place a Bid</Element.Action>
+											<Element.Action style={{ display: item?.pair ? "" : "none" }} onClick={() => setShowBuyNowModal(true)}>Buy Now</Element.Action>
+										</>
+									}
+								</>
+								: <></>
+						}
+
+
+					</Element.ActionContainer>
+					<Element.Others>
+						<Element.TabHeader>
+							<Element.Tab style={{ display: item?.auction ? "" : "none" }} onClick={() => setCurTab('bid_history')} className={curTab === 'bid_history' ? 'active' : ''}>Bids</Element.Tab>
+							<Element.Tab onClick={() => setCurTab('provenance')} className={curTab === 'provenance' ? 'active' : ''}>Activities</Element.Tab>
+						</Element.TabHeader>
+						<Element.TabContent>
+							{
+								curTab === 'bid_history' &&
+								<Element.TabContentContainer>
+									<Element.InfoList>
+										{
+											item?.auction.bids?.map((bid, index) => <History key={index} {...props} bid={bid} />)
+										}
+									</Element.InfoList>
+								</Element.TabContentContainer>
+							}
+							{
+								curTab === 'provenance' &&
+								<Element.TabContentContainer>
+									<Element.InfoList>
+										{
+											item?.events.map((event, index) => <Provenance key={index} {...props} event={event} />)
+										}
+									</Element.InfoList>
+								</Element.TabContentContainer>
+							}
+						</Element.TabContent>
+					</Element.Others>
+				</Element.DetailContainer>
+				<Modal
+					isOpen={showPlaceBidModal}
+					onRequestClose={() => closePlaceBidModal()}
+					ariaHideApp={false}
+					style={{
+						overlay: {
+							position: 'fixed',
+							top: 0,
+							left: 0,
+							right: 0,
+							bottom: 0,
+							backgroundColor: 'rgba(60, 37, 53, 0.25)',
+							zIndex: 99,
+						},
+						content: {
+							top: '50%',
+							left: '50%',
+							right: 'auto',
+							bottom: 'auto',
+							marginRight: '-50%',
+							transform: 'translate(-50%, -50%)',
+							width: '100%',
+							maxWidth: '500px',
+							borderRadius: '20px',
+							zIndex: 9999
+						},
+					}}
+				>
+					<Element.ModalBody>
+						<Element.ModalHeader>
+							<Element.ModalCloseIcon size={32} onClick={() => closePlaceBidModal()} />
+						</Element.ModalHeader>
+						<Element.ModalTitle>Your Bid</Element.ModalTitle>
+						<Element.ModalRow>
+							<Element.ModalLabel>Current bid</Element.ModalLabel>
+							<Element.ModalPrice>{formatNum(item?.auction?.price)} {currencyInfo?.symbol}</Element.ModalPrice>
+						</Element.ModalRow>
+						<Element.BidPrice>
+							<Element.ModalLabel>Your bid</Element.ModalLabel>
+							<Element.ModalMainPrice type={"number"} value={bidPrice} onChange={event => setBidPrice(event.target.value)} />
+							<Element.UnitContainer>
+								<Element.Unit>{currencyInfo?.symbol}</Element.Unit>
+							</Element.UnitContainer>
+						</Element.BidPrice>
+						<Element.ModalRow>
+							<Element.ModalLabel>Available</Element.ModalLabel>
+							<Element.ModalPrice>{formatNum(balance)} {currencyInfo?.symbol}</Element.ModalPrice>
+						</Element.ModalRow>
+						<Element.ModalAction>
+							<Element.ModalButton onClick={() => placeBid()}>
+								{
+									biddingStatus ? <CircularProgress style={{ width: "16px", height: "16px", color: "white", }} /> : "Place a Bid"
 								}
-							</>
-							: <></>
-					}
+							</Element.ModalButton>
+						</Element.ModalAction>
+					</Element.ModalBody>
+				</Modal>
+				<Modal
+					isOpen={showBuyNowModal}
+					onRequestClose={() => setShowBuyNowModal(false)}
+					ariaHideApp={false}
+					style={{
+						overlay: { position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(60, 37, 53, 0.25)', zIndex: 99 },
+						content: { top: '50%', left: '50%', right: 'auto', bottom: 'auto', marginRight: '-50%', transform: 'translate(-50%, -50%)', width: '100%', maxWidth: '500px', borderRadius: '20px', zIndex: 9999 },
+					}}
+				>
+					<Element.ModalBody>
+						<Element.ModalHeader>
+							<Element.ModalCloseIcon size={32} onClick={() => setShowBuyNowModal(false)} />
+						</Element.ModalHeader>
+						<Element.ModalTitle>
+							<Element.ModalLabel>You will pay</Element.ModalLabel>
+							<Element.PayAmount>
+								<Element.Price>{formatNum(item?.pair?.price)}</Element.Price>
+								<Element.Unit>{currencyInfo?.symbol}</Element.Unit>
+							</Element.PayAmount>
 
-
-				</Element.ActionContainer>
-				<Element.Others>
-					<Element.TabHeader>
-						<Element.Tab style={{ display: item?.auction ? "" : "none" }} onClick={() => setCurTab('bid_history')} className={curTab === 'bid_history' ? 'active' : ''}>Bids</Element.Tab>
-						<Element.Tab onClick={() => setCurTab('provenance')} className={curTab === 'provenance' ? 'active' : ''}>Activities</Element.Tab>
-					</Element.TabHeader>
-					<Element.TabContent>
+						</Element.ModalTitle>
+						<Element.ModalRow>
+							<Element.ModalLabel>Available</Element.ModalLabel>
+							<Element.ModalPrice>{formatNum(balance)} {currencyInfo?.symbol}</Element.ModalPrice>
+						</Element.ModalRow>
+						<Element.ModalActions>
+							<Element.ModalCancelButton onClick={() => setShowBuyNowModal(false)}>Cancel</Element.ModalCancelButton>
+							<Element.ModalSubmitButton onClick={() => buyItem()}>
+								{
+									buyingStatus ? <CircularProgress style={{ width: "16px", height: "16px", color: "white", }} /> : "Confirm"
+								}
+							</Element.ModalSubmitButton>
+						</Element.ModalActions>
+					</Element.ModalBody>
+				</Modal>
+				<Modal
+					isOpen={showPutMarketPlace}
+					onRequestClose={() => setShowPutMarketPlace(false)}
+					ariaHideApp={false}
+					style={{
+						overlay: {
+							position: 'fixed',
+							top: 0,
+							left: 0,
+							right: 0,
+							bottom: 0,
+							backgroundColor: 'rgba(60, 37, 53, 0.25)',
+							zIndex: 99,
+						},
+						content: {
+							top: '50%',
+							left: '50%',
+							right: 'auto',
+							bottom: 'auto',
+							marginRight: '-50%',
+							transform: 'translate(-50%, -50%)',
+							width: '100%',
+							maxWidth: '500px',
+							borderRadius: '20px',
+							zIndex: 9999
+						},
+					}}
+				>
+					<Element.ModalBody>
+						<Element.ModalHeader>
+							<Element.ModalCloseIcon size={32} onClick={() => setShowPutMarketPlace(false)} />
+						</Element.ModalHeader>
+						<Element.ModalTitle>Put on Marketplace</Element.ModalTitle>
+						<Element.PutTypes>
+							<Element.PutType onClick={() => setPutType('fixed')} className={putType === 'fixed' ? 'active' : ''}>
+								<Element.FixedIcon size={32} />
+								<Element.TypeLabel>Fixed price</Element.TypeLabel>
+							</Element.PutType>
+							<Element.PutType onClick={() => setPutType('timed')} className={putType === 'timed' ? 'active' : ''}>
+								<Element.TimeIcon size={36} />
+								<Element.TypeLabel>Timed auction</Element.TypeLabel>
+							</Element.PutType>
+						</Element.PutTypes>
 						{
-							curTab === 'bid_history' &&
-							<Element.TabContentContainer>
-								<Element.InfoList>
-									{
-										item?.auction.bids?.map((bid, index) => <History key={index} {...props} bid={bid} />)
-									}
-								</Element.InfoList>
-							</Element.TabContentContainer>
-						}
-						{
-							curTab === 'provenance' &&
-							<Element.TabContentContainer>
-								<Element.InfoList>
-									{
-										item?.events.map((event, index) => <Provenance key={index} {...props} event={event} />)
-									}
-								</Element.InfoList>
-							</Element.TabContentContainer>
-						}
-					</Element.TabContent>
-				</Element.Others>
-			</Element.DetailContainer>
-			<Modal
-				isOpen={showPlaceBidModal}
-				onRequestClose={() => closePlaceBidModal()}
-				ariaHideApp={false}
-				style={{
-					overlay: {
-						position: 'fixed',
-						top: 0,
-						left: 0,
-						right: 0,
-						bottom: 0,
-						backgroundColor: 'rgba(60, 37, 53, 0.25)',
-						zIndex: 99,
-					},
-					content: {
-						top: '50%',
-						left: '50%',
-						right: 'auto',
-						bottom: 'auto',
-						marginRight: '-50%',
-						transform: 'translate(-50%, -50%)',
-						width: '100%',
-						maxWidth: '500px',
-						borderRadius: '20px',
-						zIndex: 9999
-					},
-				}}
-			>
-				<Element.ModalBody>
-					<Element.ModalHeader>
-						<Element.ModalCloseIcon size={32} onClick={() => closePlaceBidModal()} />
-					</Element.ModalHeader>
-					<Element.ModalTitle>Your Bid</Element.ModalTitle>
-					<Element.ModalRow>
-						<Element.ModalLabel>Current bid</Element.ModalLabel>
-						<Element.ModalPrice>{formatNum(item?.auction?.price)} {currencyInfo?.symbol}</Element.ModalPrice>
-					</Element.ModalRow>
-					<Element.BidPrice>
-						<Element.ModalLabel>Your bid</Element.ModalLabel>
-						<Element.ModalMainPrice type={"number"} value={bidPrice} onChange={event => setBidPrice(event.target.value)} />
-						<Element.UnitContainer>
-							<Element.Unit>{currencyInfo?.symbol}</Element.Unit>
-						</Element.UnitContainer>
-					</Element.BidPrice>
-					<Element.ModalRow>
-						<Element.ModalLabel>Available</Element.ModalLabel>
-						<Element.ModalPrice>{formatNum(balance)} {currencyInfo?.symbol}</Element.ModalPrice>
-					</Element.ModalRow>
-					<Element.ModalAction>
-						<Element.ModalButton onClick={() => placeBid()}>
-							{
-								biddingStatus ? <CircularProgress style={{ width: "16px", height: "16px", color: "white", }} /> : "Place a Bid"
-							}
-						</Element.ModalButton>
-					</Element.ModalAction>
-				</Element.ModalBody>
-			</Modal>
-			<Modal
-				isOpen={showBuyNowModal}
-				onRequestClose={() => setShowBuyNowModal(false)}
-				ariaHideApp={false}
-				style={{
-					overlay: { position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(60, 37, 53, 0.25)', zIndex: 99 },
-					content: { top: '50%', left: '50%', right: 'auto', bottom: 'auto', marginRight: '-50%', transform: 'translate(-50%, -50%)', width: '100%', maxWidth: '500px', borderRadius: '20px', zIndex: 9999 },
-				}}
-			>
-				<Element.ModalBody>
-					<Element.ModalHeader>
-						<Element.ModalCloseIcon size={32} onClick={() => setShowBuyNowModal(false)} />
-					</Element.ModalHeader>
-					<Element.ModalTitle>
-						<Element.ModalLabel>You will pay</Element.ModalLabel>
-						<Element.PayAmount>
-							<Element.Price>{formatNum(item?.pair?.price)}</Element.Price>
-							<Element.Unit>{currencyInfo?.symbol}</Element.Unit>
-						</Element.PayAmount>
-
-					</Element.ModalTitle>
-					<Element.ModalRow>
-						<Element.ModalLabel>Available</Element.ModalLabel>
-						<Element.ModalPrice>{formatNum(balance)} {currencyInfo?.symbol}</Element.ModalPrice>
-					</Element.ModalRow>
-					<Element.ModalActions>
-						<Element.ModalCancelButton onClick={() => setShowBuyNowModal(false)}>Cancel</Element.ModalCancelButton>
-						<Element.ModalSubmitButton onClick={() => buyItem()}>
-							{
-								buyingStatus ? <CircularProgress style={{ width: "16px", height: "16px", color: "white", }} /> : "Confirm"
-							}
-						</Element.ModalSubmitButton>
-					</Element.ModalActions>
-				</Element.ModalBody>
-			</Modal>
-			<Modal
-				isOpen={showPutMarketPlace}
-				onRequestClose={() => setShowPutMarketPlace(false)}
-				ariaHideApp={false}
-				style={{
-					overlay: {
-						position: 'fixed',
-						top: 0,
-						left: 0,
-						right: 0,
-						bottom: 0,
-						backgroundColor: 'rgba(60, 37, 53, 0.25)',
-						zIndex: 99,
-					},
-					content: {
-						top: '50%',
-						left: '50%',
-						right: 'auto',
-						bottom: 'auto',
-						marginRight: '-50%',
-						transform: 'translate(-50%, -50%)',
-						width: '100%',
-						maxWidth: '500px',
-						borderRadius: '20px',
-						zIndex: 9999
-					},
-				}}
-			>
-				<Element.ModalBody>
-					<Element.ModalHeader>
-						<Element.ModalCloseIcon size={32} onClick={() => setShowPutMarketPlace(false)} />
-					</Element.ModalHeader>
-					<Element.ModalTitle>Put on Marketplace</Element.ModalTitle>
-					<Element.PutTypes>
-						<Element.PutType onClick={() => setPutType('fixed')} className={putType === 'fixed' ? 'active' : ''}>
-							<Element.FixedIcon size={32} />
-							<Element.TypeLabel>Fixed price</Element.TypeLabel>
-						</Element.PutType>
-						<Element.PutType onClick={() => setPutType('timed')} className={putType === 'timed' ? 'active' : ''}>
-							<Element.TimeIcon size={36} />
-							<Element.TypeLabel>Timed auction</Element.TypeLabel>
-						</Element.PutType>
-					</Element.PutTypes>
-					{
-						putType === 'fixed' &&
-						<Element.Field>
-							<Element.label>Price</Element.label>
-							<Element.InputContainer>
-								<Element.Input type={"number"} placeholder={"Enter Price"} value={putPrice} onChange={event => setPutPrice(event.target.value)} />
-								<Element.CurrencySelect name={"currencies"} defaultValue={currencyInfo.address} onChange={event => setCurrencyInfo(getCurrencyInfo(event.target.value))}>
-									{
-										currencies.map((currencyItem, index) =>
-											<Element.OrderByOption key={index} value={currencyItem.address}>{currencyItem.symbol}</Element.OrderByOption>
-										)
-									}
-								</Element.CurrencySelect>
-							</Element.InputContainer>
-						</Element.Field>
-					}
-					{
-						putType === 'timed' &&
-						<>
+							putType === 'fixed' &&
 							<Element.Field>
-								<Element.label>Minimum bid</Element.label>
+								<Element.label>Price</Element.label>
 								<Element.InputContainer>
-									<Element.Input type={"number"} placeholder={"Enter minimum bid"} value={putPrice} onChange={event => setPutPrice(event.target.value)} />
+									<Element.Input type={"number"} placeholder={"Enter Price"} value={putPrice} onChange={event => setPutPrice(event.target.value)} />
 									<Element.CurrencySelect name={"currencies"} defaultValue={currencyInfo.address} onChange={event => setCurrencyInfo(getCurrencyInfo(event.target.value))}>
 										{
 											currencies.map((currencyItem, index) =>
-												<Element.OrderByOption key={index} value={currencyItem.address}>{currencyItem?.symbol}</Element.OrderByOption>
+												<Element.OrderByOption key={index} value={currencyItem.address}>{currencyItem.symbol}</Element.OrderByOption>
 											)
 										}
 									</Element.CurrencySelect>
 								</Element.InputContainer>
-
 							</Element.Field>
-							<Element.SelectRow>
-								<Element.SelectField>
-									<Element.label>Starting Date</Element.label>
-									<Element.StartingDateSelect name={"starting_date"} defaultValue={startType} onChange={event => setStartType(event.target.value)}>
-										<Element.OrderByOption value={"now"}>Right after listing</Element.OrderByOption>
-										<Element.OrderByOption value={"specific"}>Pick specific date</Element.OrderByOption>
-									</Element.StartingDateSelect>
-									{
-										startType === "specific" &&
-										<DatePicker
-											selected={startDate}
-											onChange={value => setStartDate(value)}
-											className={"input-picker"}
-											showTimeSelect
-											dateFormat="Pp"
-										/>
-									}
-								</Element.SelectField>
-								<Element.SelectField>
-									<Element.label>Expiration Date</Element.label>
-									<Element.StartingDateSelect name={"expiration_date"} defaultValue={endType} onChange={event => setEndType(event.target.value)}>
-										<Element.OrderByOption value={"1"}>1 day</Element.OrderByOption>
-										<Element.OrderByOption value={"3"}>3 days</Element.OrderByOption>
-										<Element.OrderByOption value={"5"}>5 days</Element.OrderByOption>
-										<Element.OrderByOption value={"7"}>7 days</Element.OrderByOption>
-										<Element.OrderByOption value={"specific"}>Pick specific date</Element.OrderByOption>
-									</Element.StartingDateSelect>
-									{
-										endType === "specific" &&
-										<DatePicker
-											selected={endDate}
-											onChange={value => setEndDate(value)}
-											className={"input-picker"}
-											showTimeSelect
-											dateFormat="Pp"
-										/>
-									}
-								</Element.SelectField>
-							</Element.SelectRow>
-						</>
-					}
+						}
+						{
+							putType === 'timed' &&
+							<>
+								<Element.Field>
+									<Element.label>Minimum bid</Element.label>
+									<Element.InputContainer>
+										<Element.Input type={"number"} placeholder={"Enter minimum bid"} value={putPrice} onChange={event => setPutPrice(event.target.value)} />
+										<Element.CurrencySelect name={"currencies"} defaultValue={currencyInfo.address} onChange={event => setCurrencyInfo(getCurrencyInfo(event.target.value))}>
+											{
+												currencies.map((currencyItem, index) =>
+													<Element.OrderByOption key={index} value={currencyItem.address}>{currencyItem?.symbol}</Element.OrderByOption>
+												)
+											}
+										</Element.CurrencySelect>
+									</Element.InputContainer>
 
-					<Element.ModalActions>
-						<Element.ModalCancelButton onClick={() => setShowPutMarketPlace(false)}>Cancel</Element.ModalCancelButton>
-						<Element.ModalSubmitButton onClick={() => putOnMarketPlace()}>
-							{
-								listingStatus || creatingAuctionStatus ? <CircularProgress style={{ width: "16px", height: "16px", color: "white", }} /> : "Confirm"
-							}
-						</Element.ModalSubmitButton>
-					</Element.ModalActions>
-				</Element.ModalBody>
-			</Modal>
-			<Modal
-				isOpen={showEndAuction}
-				onRequestClose={() => setShowEndAuction(false)}
-				ariaHideApp={false}
-				style={{
-					overlay: {
-						position: 'fixed',
-						top: 0,
-						left: 0,
-						right: 0,
-						bottom: 0,
-						backgroundColor: 'rgba(60, 37, 53, 0.25)',
-						zIndex: 99,
-					},
-					content: {
-						top: '50%',
-						left: '50%',
-						right: 'auto',
-						bottom: 'auto',
-						marginRight: '-50%',
-						transform: 'translate(-50%, -50%)',
-						width: '100%',
-						maxWidth: '500px',
-						borderRadius: '20px',
-						zIndex: 9999
-					},
-				}}
-			>
-				<Element.ModalBody>
-					<Element.ModalHeader>
-						<Element.ModalCloseIcon size={32} onClick={() => setShowEndAuction(false)} />
-					</Element.ModalHeader>
-					<Element.ModalTitle>
-						End Auction
-						<Element.PayAmount>
-							<Element.Price>Are you sure you want to end this auction ?</Element.Price>
-						</Element.PayAmount>
-					</Element.ModalTitle>
-					<Element.ModalActions>
-						<Element.ModalCancelButton onClick={() => setShowEndAuction(false)}>Cancel</Element.ModalCancelButton>
-						<Element.ModalSubmitButton onClick={() => endAuction()}>
-							{
-								endingAuctionStatus ? <CircularProgress style={{ width: "16px", height: "16px", color: "white", }} /> : "End Auction"
-							}
-						</Element.ModalSubmitButton>
-					</Element.ModalActions>
-				</Element.ModalBody>
-			</Modal>
-			<Modal
-				isOpen={showUnlistMarketPlace}
-				onRequestClose={() => setShowUnlistMarketPlace(false)}
-				ariaHideApp={false}
-				style={{
-					overlay: {
-						position: 'fixed',
-						top: 0,
-						left: 0,
-						right: 0,
-						bottom: 0,
-						backgroundColor: 'rgba(60, 37, 53, 0.25)',
-						zIndex: 99,
-					},
-					content: {
-						top: '50%',
-						left: '50%',
-						right: 'auto',
-						bottom: 'auto',
-						marginRight: '-50%',
-						transform: 'translate(-50%, -50%)',
-						width: '100%',
-						maxWidth: '500px',
-						borderRadius: '20px',
-						zIndex: 9999
-					},
-				}}
-			>
-				<Element.ModalBody>
-					<Element.ModalHeader>
-						<Element.ModalCloseIcon size={32} onClick={() => setShowUnlistMarketPlace(false)} />
-					</Element.ModalHeader>
-					<Element.ModalTitle>
-						Unlist Item
-						<Element.PayAmount>
-							<Element.Price>Are you sure you want to unlist this auction ?</Element.Price>
-						</Element.PayAmount>
-					</Element.ModalTitle>
-					<Element.ModalActions>
-						<Element.ModalCancelButton onClick={() => setShowUnlistMarketPlace(false)}>Cancel</Element.ModalCancelButton>
-						<Element.ModalSubmitButton onClick={() => unlistItem()}>
-							{
-								delistingStatus ? <CircularProgress style={{ width: "16px", height: "16px", color: "white", }} /> : "Unlist"
-							}
-						</Element.ModalSubmitButton>
-					</Element.ModalActions>
-				</Element.ModalBody>
-			</Modal>
-			<Snackbar
-				anchorOrigin={{
-					vertical: 'bottom',
-					horizontal: 'center'
-				}}
-				open={openSnackbar}
-				autoHideDuration={3000}
-				onClose={handleCloseDialog}
-				message={snackBarMessage}
-				action={
-					<React.Fragment>
-						<IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseDialog}>
-							<CloseIcon fontSize="small" />
-						</IconButton>
-					</React.Fragment>
-				}
-			/>
-		</Element.Container>
+								</Element.Field>
+								<Element.SelectRow>
+									<Element.SelectField>
+										<Element.label>Starting Date</Element.label>
+										<Element.StartingDateSelect name={"starting_date"} defaultValue={startType} onChange={event => setStartType(event.target.value)}>
+											<Element.OrderByOption value={"now"}>Right after listing</Element.OrderByOption>
+											<Element.OrderByOption value={"specific"}>Pick specific date</Element.OrderByOption>
+										</Element.StartingDateSelect>
+										{
+											startType === "specific" &&
+											<DatePicker
+												selected={startDate}
+												onChange={value => setStartDate(value)}
+												className={"input-picker"}
+												showTimeSelect
+												dateFormat="Pp"
+											/>
+										}
+									</Element.SelectField>
+									<Element.SelectField>
+										<Element.label>Expiration Date</Element.label>
+										<Element.StartingDateSelect name={"expiration_date"} defaultValue={endType} onChange={event => setEndType(event.target.value)}>
+											<Element.OrderByOption value={"1"}>1 day</Element.OrderByOption>
+											<Element.OrderByOption value={"3"}>3 days</Element.OrderByOption>
+											<Element.OrderByOption value={"5"}>5 days</Element.OrderByOption>
+											<Element.OrderByOption value={"7"}>7 days</Element.OrderByOption>
+											<Element.OrderByOption value={"specific"}>Pick specific date</Element.OrderByOption>
+										</Element.StartingDateSelect>
+										{
+											endType === "specific" &&
+											<DatePicker
+												selected={endDate}
+												onChange={value => setEndDate(value)}
+												className={"input-picker"}
+												showTimeSelect
+												dateFormat="Pp"
+											/>
+										}
+									</Element.SelectField>
+								</Element.SelectRow>
+							</>
+						}
+
+						<Element.ModalActions>
+							<Element.ModalCancelButton onClick={() => setShowPutMarketPlace(false)}>Cancel</Element.ModalCancelButton>
+							<Element.ModalSubmitButton onClick={() => putOnMarketPlace()}>
+								{
+									listingStatus || creatingAuctionStatus ? <CircularProgress style={{ width: "16px", height: "16px", color: "white", }} /> : "Confirm"
+								}
+							</Element.ModalSubmitButton>
+						</Element.ModalActions>
+					</Element.ModalBody>
+				</Modal>
+				<Modal
+					isOpen={showEndAuction}
+					onRequestClose={() => setShowEndAuction(false)}
+					ariaHideApp={false}
+					style={{
+						overlay: {
+							position: 'fixed',
+							top: 0,
+							left: 0,
+							right: 0,
+							bottom: 0,
+							backgroundColor: 'rgba(60, 37, 53, 0.25)',
+							zIndex: 99,
+						},
+						content: {
+							top: '50%',
+							left: '50%',
+							right: 'auto',
+							bottom: 'auto',
+							marginRight: '-50%',
+							transform: 'translate(-50%, -50%)',
+							width: '100%',
+							maxWidth: '500px',
+							borderRadius: '20px',
+							zIndex: 9999
+						},
+					}}
+				>
+					<Element.ModalBody>
+						<Element.ModalHeader>
+							<Element.ModalCloseIcon size={32} onClick={() => setShowEndAuction(false)} />
+						</Element.ModalHeader>
+						<Element.ModalTitle>
+							End Auction
+							<Element.PayAmount>
+								<Element.Price>Are you sure you want to end this auction ?</Element.Price>
+							</Element.PayAmount>
+						</Element.ModalTitle>
+						<Element.ModalActions>
+							<Element.ModalCancelButton onClick={() => setShowEndAuction(false)}>Cancel</Element.ModalCancelButton>
+							<Element.ModalSubmitButton onClick={() => endAuction()}>
+								{
+									endingAuctionStatus ? <CircularProgress style={{ width: "16px", height: "16px", color: "white", }} /> : "End Auction"
+								}
+							</Element.ModalSubmitButton>
+						</Element.ModalActions>
+					</Element.ModalBody>
+				</Modal>
+				<Modal
+					isOpen={showUnlistMarketPlace}
+					onRequestClose={() => setShowUnlistMarketPlace(false)}
+					ariaHideApp={false}
+					style={{
+						overlay: {
+							position: 'fixed',
+							top: 0,
+							left: 0,
+							right: 0,
+							bottom: 0,
+							backgroundColor: 'rgba(60, 37, 53, 0.25)',
+							zIndex: 99,
+						},
+						content: {
+							top: '50%',
+							left: '50%',
+							right: 'auto',
+							bottom: 'auto',
+							marginRight: '-50%',
+							transform: 'translate(-50%, -50%)',
+							width: '100%',
+							maxWidth: '500px',
+							borderRadius: '20px',
+							zIndex: 9999
+						},
+					}}
+				>
+					<Element.ModalBody>
+						<Element.ModalHeader>
+							<Element.ModalCloseIcon size={32} onClick={() => setShowUnlistMarketPlace(false)} />
+						</Element.ModalHeader>
+						<Element.ModalTitle>
+							Unlist Item
+							<Element.PayAmount>
+								<Element.Price>Are you sure you want to unlist this auction ?</Element.Price>
+							</Element.PayAmount>
+						</Element.ModalTitle>
+						<Element.ModalActions>
+							<Element.ModalCancelButton onClick={() => setShowUnlistMarketPlace(false)}>Cancel</Element.ModalCancelButton>
+							<Element.ModalSubmitButton onClick={() => unlistItem()}>
+								{
+									delistingStatus ? <CircularProgress style={{ width: "16px", height: "16px", color: "white", }} /> : "Unlist"
+								}
+							</Element.ModalSubmitButton>
+						</Element.ModalActions>
+					</Element.ModalBody>
+				</Modal>
+				<Snackbar
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'center'
+					}}
+					open={openSnackbar}
+					autoHideDuration={3000}
+					onClose={handleCloseDialog}
+					message={snackBarMessage}
+					action={
+						<React.Fragment>
+							<IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseDialog}>
+								<CloseIcon fontSize="small" />
+							</IconButton>
+						</React.Fragment>
+					}
+				/>
+			</Element.Container>
+		</div>
 	);
 
 }
