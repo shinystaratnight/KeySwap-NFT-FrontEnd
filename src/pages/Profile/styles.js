@@ -1,6 +1,8 @@
 import styled from 'styled-components';
-import {ContentCopy} from "@styled-icons/material";
-import {Verified} from "@styled-icons/material";
+import { ContentCopy } from "@styled-icons/material";
+import { Verified } from "@styled-icons/material";
+import { Edit } from '@styled-icons/boxicons-regular/Edit'
+import { FileCopy2 } from '@styled-icons/remix-line/FileCopy2'
 
 export const Container = styled.div`
     max-width: 1480px;
@@ -219,17 +221,6 @@ export const Caption = styled.div`
 
 export const ProfileActions = styled.div`
     text-align: center;
-`;
-
-export const EditProfileBtn = styled.div`
-    background-image: linear-gradient(180deg,#F8D12F 0%,var(--colorOrange); 100%);
-    padding: 12px 24px;
-    font-size: 24px;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 120px;
-    margin: 0 auto;
-    margin-top: 12px;
 `;
 
 export const TabContainer = styled.div`
@@ -1009,6 +1000,400 @@ export const ProfileBanner = styled.div`
     }
 `;
 
+
 export const ProfilePageWrap = styled.div`
     position: relative;
 `;
+export const ProfileSection = styled.div`
+	padding: 80px 0 75px;
+	@media screen and (min-width: 992px) {
+		padding: 120px 0 115px;
+	}
+`
+export const ProfileItem = styled.div`
+
+`
+export const ProfileCover = styled.div`
+	border-radius: 10px;
+	overflow: hidden;
+	position: relative;
+	& > img {
+		width: 100%;
+		max-width: 100%;
+    height: auto;
+		min-height: 150px;
+	}
+	&:hover .edit-profile {
+		opacity: 1;
+    transform: translateY(0);
+	}
+	@media screen and (min-width: 576px) {
+		& > img {
+			min-height: 200px;
+		}
+	}
+`
+export const EditProfile = styled.div`
+	top: 20px;
+	right: 20px;
+	width: max-content;
+	height: max-content;
+	border: 1px solid rgba(255,255,255,.5);
+	padding: 5px 10px;
+	border-radius: 5px;
+	background: rgba(4,11,41,.3);
+	opacity: 0;
+	transform: translateY(-5px);
+	transition: all .3s ease;
+	display: inline-block;
+	position: absolute;
+	content: "";
+	cursor: pointer;
+	overflow: hidden;
+`
+export const EditProfileBtn = styled.div`
+	color: #fff;
+	border-radius: 5px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+`
+export const EditIcon = styled(Edit)`
+	margin-right: 5px;
+	color: #fff;
+	cursor: pointer;
+	width: 16px;
+	height: 16px;
+`
+export const ProfileInformation = styled.div`
+	display: flex;
+  flex-wrap: wrap;
+	flex-direction: column;
+	margin-top: -85px;
+	padding-bottom: 20px;
+	align-items: center;
+	@media screen and (min-width: 992px) {
+		background: transparent;
+    padding-bottom: 0;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-top: -205px;
+	}
+	@media screen and (min-width: 1200px) {
+		margin-top: -245px;
+	}	
+`
+export const ProfilePic = styled.div`
+	width: 140px;
+	height: 140px;
+	border: 5px solid #fff;
+	border-radius: 50%;
+	position: relative;
+	overflow: hidden;
+	img {
+		object-fit: cover;
+		height: 100%;
+		width: 100%;
+	}
+	& .edit-profile {
+		bottom: 10px;
+		top: unset;
+		left: 50%;
+	}
+	&:hover .edit-profile {
+		opacity: 1;
+    transform: translateX(-50%) translateY(0);		
+	}
+	@media screen and (min-width: 992px) {
+		width: auto;
+    height: auto;
+    border-radius: 15px;
+    height: 250px;
+    width: 200px;
+    transform: translate(10px, 10px);
+	}
+	@media screen and (min-width: 1200px) {
+		height: 270px;
+    width: 220px;
+    transform: translate(20px, 20px);
+	}	
+`
+export const ProfileName = styled.div`
+	margin-top: 10px;
+	text-align: center;
+	h4 {		
+		margin-bottom: 2px;
+		margin-top: 0;
+		font-size: calc(1.275rem + 0.3vw);
+	}
+	p {
+		margin-top: 0;
+		margin-bottom: 1rem;
+		text-align: left;
+	}
+	@media screen and (min-width: 992px) {
+		margin-left: 30px;
+		transform: translateY(-70px);
+		h4 {
+			color: #fff;
+		}
+		p {
+			color: #fff;
+			margin-bottom: 0;
+		}
+	}
+	@media screen and (min-width: 1200px) {
+		margin-left: 45px;
+		transform: translateY(-50px);
+		h4 {
+			font-size: 1.5rem;
+		}
+	}
+`
+export const ProfileContact = styled.div`
+	@media screen and (min-width: 992px) {
+		margin-left: 20px;
+		transform: translateY(-50px);
+	}
+	@media screen and (min-width: 1200px) {
+		margin-left: 40px;
+		transform: translateY(-70px);
+	}
+`
+export const CrytoCode = styled.div`
+	background-color: rgba(255,255,255,.3);
+	border-radius: 5px;
+	box-shadow: 0px 1px 2px rgb(0 0 0 / 7%);
+	justify-content: space-between;
+	width: 100%;
+	display: flex;
+  flex-wrap: wrap;
+	input {
+		font-size: 1rem;
+    color: #fff;
+    background-color: transparent;
+		border: 1px solid transparent;
+    max-width: 145px;
+		padding-left: 10px;
+		line-height: 1.15;
+    margin: 0;
+		outline: 0 !important;
+		height: 30px;
+	}
+	@media screen and (max-width: 991px) {
+		input {
+			color: #000;
+		}
+	}
+`
+export const CrytoCopy = styled.div`
+	width: 30px;
+	height: 30px;
+	border: 1px solid #040b29;
+	border-radius: 5px;
+	margin-left: 5px;
+	background: var(--colorOrange);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`
+export const CopyIcon = styled(FileCopy2)`
+	color: #fff;
+	width: 24px;
+	cursor: pointer;
+`
+export const ProfileDetails = styled.div`
+	padding-top: 60px;
+`
+export const NavBox = styled.ul`
+	background: rgba(0,0,0,.07);
+	border-radius: 2px;
+	margin-bottom: 30px;
+	align-items: center;
+	padding-right: 0.5rem!important;
+	padding-left: 0.5rem!important;
+	display: flex;
+	flex-wrap: wrap;
+	list-style: none;
+	margin-top: 0;
+`
+export const NavItem = styled.li`
+	padding: 10px 5px;
+	@media screen and (min-width: 768px) {
+		padding: 15px 5px;
+	}
+	@media screen and (min-width: 992px) {
+		margin-left: 13px;
+	}
+`
+export const NavLink = styled.button`
+	color: ${props => props.active ? '#fff' : '#000'};
+	padding: 5px 10px;
+	border-radius: 2px;
+	background: ${props => props.active ? 'var(--colorOrange)' : 'transparent'};
+	border: 0;
+	outline: none !important;
+	cursor: pointer;
+	display: block;
+	text-decoration: none;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+	line-height: 1.15;
+  margin: 0;
+`
+export const TabContents = styled.div`
+
+`
+export const LoadMoreBtn = styled.button`
+  background: var(--colorOrange);
+  padding: 12px 30px;
+  border: 1px solid var(--colorOrange);
+  border-radius: 100px;
+  display: inline-block;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 16px;
+  &:hover {
+    background: #000 !important;
+    color: #fff;
+  }
+`
+export const RightSection = styled.div`
+	margin-top: 3rem;
+	position: sticky;
+  top: 90px;
+	@media screen and (min-width: 1200px) {
+		margin-top: 0;
+	}
+`
+export const SearchWidget = styled.div`
+	border-radius: 5px;
+	margin-bottom: 20px;
+	background: rgba(0,0,0,.07);
+`
+export const WidgetTitle = styled.div`
+	border-bottom: 1px solid rgba(255,255,255,.8);
+	padding: 20px;
+	overflow: hidden;
+	h5 {
+		text-transform: capitalize;
+		margin-bottom: 0;
+		margin-top: 0;
+		color: #000;
+		font-size: 1.25rem;
+	}
+`
+export const WidgetContent = styled.div`
+	padding: 20px;
+	margin: 0;
+	p {
+		margin-top: 0;
+		margin-bottom: 1rem;
+	}
+`
+export const SearchBox = styled.div`
+  & input:focus~label {
+    color: #5138ee;
+    opacity: .8;
+    transform: scale(.85) translateY(-0.5rem) translateX(0.15rem);
+  }
+  @media screen and (max-width: 575px) {
+    width: 100%;
+  }
+`
+export const SearchInput = styled.input`  
+  height: calc(3.5rem + 2px);
+  padding: 1.625rem 0.75rem 0.625rem;
+  padding-right: 45px !important;
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  appearance: none;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  font-weight: 400;
+  line-height: 1.5;
+  border: 1px solid rgba(255,255,255,.1);
+  &:focus {
+    background-color: #fff;
+    color: #000;
+    border-color: rgba(81,56,238,.4);
+    box-shadow: none;
+    outline: 0;
+  }  
+`
+export const SearchLabel = styled.label`
+  color: #000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  padding: 1rem 0.75rem;
+  pointer-events: none; 
+  transform-origin: 0 0;
+  transition: opacity .1s ease-in-out,transform .1s ease-in-out;
+  font-family: "Roboto",sans-serif;
+  line-height: 1.5;
+`
+export const FormFloating = styled.div`
+  position: relative;
+  width: 100%;
+  @media screen and (min-width: 576px) {
+    width: ${props => props.width ? props.width : '45%'};
+  }
+  @media screen and (min-width: 992px) {
+    width: auto;
+  }  
+`
+export const WidgetWrapper = styled.ul`
+	padding: 25px 20px;
+	column-gap: 10px;
+	row-gap: 2px;
+	margin-bottom: 0;
+	justify-content: center!important;
+	flex-wrap: wrap!important;
+	display: flex!important;
+	list-style: none;
+	margin-top: 0;
+	li {
+		width: calc(100% / 3 - 7px);
+    border: none;
+		padding: 0;
+		list-style: none;
+	}
+	a {
+		border-radius: 5px;
+		overflow: hidden;
+		transition: all .3s ease;
+    display: inline-block;
+	}
+	img {
+		transition: .6s all cubic-bezier(0.23, 1, 0.32, 1);
+		max-width: 100%;
+    height: auto;
+	}
+	@media (min-width: 992px) and (max-width: 1199px) {
+		li {
+			width: calc(100% / 6 - 7px);
+		}
+	}
+`
+export const FilterSelect = styled.li`
+	width: auto;
+	margin-left: auto;
+	margin-right: 15px;
+	select {
+		color: #000;
+    background-color: #fff !important;
+		outline: none;
+		border: none;
+		padding: 5px;
+		border-radius: 2px;
+		line-height: 1.15;
+    margin: 0;
+		font-size: 1rem;
+	}
+`

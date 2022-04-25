@@ -163,13 +163,7 @@ const Explore = () => {
                   </Element.LoadMoreBtn>
                 </GridItem>
               )
-            }
-
-            {/* <div className="cardList" style={{ display: noItems ? "none" : "" }}>
-              <button className="cta-button" onClick={() => loadMore()}>
-                {loading ? "Loading..." : "Load more"}
-              </button>
-            </div> */}
+            }           
           </Element.CardList>
         </GridContainer>
       </Element.ExploreSection>

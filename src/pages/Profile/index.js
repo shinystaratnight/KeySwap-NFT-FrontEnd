@@ -1,127 +1,88 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React , {useState,useEffect} from "react";
-import { ethers } from "ethers";
-import {useParams} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams, Link, useHistory } from "react-router-dom";
 import { useWeb3React } from '@web3-react/core'
 import axios from 'axios'
-import { Link } from "react-router-dom";
+import { slice } from 'lodash'
 
-import * as HomeElement from '../Home/styles';
-import Nft from "../Home/nft";
-import { shorter, formatNum } from "../../utils";
+import PageHeader from 'components/PageHeader'
+import { GridContainer, GridRow, GridItem } from 'components/Grid'
+import ExploreItem from 'components/ExploreItem'
 
 import * as Element from "./styles";
 
-import FilterIcon from "../../assets/images/filter.png";
-import CopyIcon from "../../assets/images/copyIcon.png";
-
 const SELECT_SALE_TYPES = [
-  {value: 'fixed', text: 'Fixed Price'},
-  {value: 'auction', text: 'Live Auction'}
-];
-
-const SELECT_ORDER_BY_ITEMS = [
-  {value: 'timestamp', text: 'Recently listed'},
-  {value: 'likeCount', text: 'Most favorited'},
-  {value: 'name', text: 'Name'},
+  { value: 'fixed', text: 'Fixed Price' },
+  { value: 'auction', text: 'Live Auction' }
 ];
 
 function Profile(props) {
   let { id } = useParams();
+  const history = useHistory();
   const { user, login } = props;
   const [userProfile, setUserProfile] = useState(undefined)
-  const { account, chainId, library } = useWeb3React();  
+  const { account, chainId, library } = useWeb3React();
 
   const [curTab, setCurTab] = useState(1); // 1: Owned, 2: On sale, 3: Created, 4: Liked
 
-  const [showFilter, setShowFilter] = useState(false);
-  const [showSortBy, setShowSortBy] = useState(false);
-
-  const [filters, setFilters] = useState({
-      saleType: null, 
-  });
-  const [selectedFilters, setSelectedFilters] = useState({
-      saleType: null, 
-  });
-  
-  const [items, setItems] = useState([]) 
-  const [searchTxt, setSearchTxt] = useState("")   
-  const [tempSearchTxt, setTempSearchTxt] = useState("") 
-  const [sortBy, setSortBy] = useState("timestamp") 
-  const [sortByText, setSortByText] = useState("Recently listed")
+  const [items, setItems] = useState([])
+  const [favoritedItems, setFavoritedItems] = useState([])
+  const [searchTxt, setSearchTxt] = useState("")
+  const [tempSearchTxt, setTempSearchTxt] = useState("")
+  const [saleType, setSaleType] = useState('all')
 
   const [page, setPage] = useState(1)
   const [noItems, setNoItems] = useState(false)
   const [initialItemsLoaded, setInitialItemsLoaded] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => {        
-    if (!userProfile){
+  useEffect(() => {
+    if (!userProfile) {
       getUser()
-    }        
+    }
   }, [user])
 
   useEffect(() => {
-    if(!!user) {
+    if (!!user) {
       login();
     }
+    getFavoritedItems()
   }, [user, account, library])
 
-  function getUser(){
+  function getUser() {
     axios.get(`/api/user/${id ? id : ""}`)
-    .then(res => {
-      setUserProfile(res.data.user)                
-    })
+      .then(res => {
+        setUserProfile(res.data.user)
+      })
   }
 
-  function onSetSaleType(saleType) {
-    if (filters.saleType && (filters.saleType?.value === saleType.value)) {
-        setFilters({ saleType:null })
-    } else {
-        setFilters({ saleType:saleType })
-    }  
-  }
-
-  function removeSaleType() {
-    setFilters({ saleType:null })
-    setSelectedFilters({ saleType:null })        
-  }
-
-  function onSetSelectedFilters() {
-    setShowFilter(false)
-    setSelectedFilters(filters)        
-  }
-  function onClearAll() {
-    setFilters({saleType: null})
-    setSelectedFilters({saleType: null})
-  }
-
-  useEffect(() => {    
+  useEffect(() => {
     setItems([]);
     setNoItems(false)
     setInitialItemsLoaded(false);
     setLoading(true);
     setPage(1);
-    fetchItems(true); 		   
-  }, [id, selectedFilters, searchTxt, sortBy, curTab])
+    fetchItems(true);
+  }, [id, saleType, searchTxt, curTab])
 
   useEffect(() => {
-    setLoading(true)    
+    setLoading(true)
     if (initialItemsLoaded) {
-      fetchItems(false); 	   
+      fetchItems(false);
     }
   }, [page])
 
   function fetchItems(reset) {
-    let paramData = {sortDir:'desc'}
-
-    if (sortBy) {
-      paramData.sortBy = sortBy            
+    let paramData = {
+      sortDir: 'desc',
+      saleType: saleType,
+      sortBy: 'timestamp'
     }
+
     if (searchTxt) {
-      paramData.searchTxt = searchTxt            
-    }   
-    
+      paramData.searchTxt = searchTxt
+    }
+
     switch (curTab) {
       case 1:
         // Owned
@@ -130,7 +91,7 @@ function Profile(props) {
       case 2:
         // On sale
         paramData.itemOwner = id;
-        paramData.saleType = 'all'; 
+        paramData.saleType = 'all';
         break;
       case 3:
         // Created
@@ -138,54 +99,47 @@ function Profile(props) {
         break;
       case 4:
         // Liked
-        paramData.likes = id; 
+        paramData.likes = id;
         break;
       default:
         break;
-    }    
-
-    if (selectedFilters.saleType) {
-      paramData.saleType = selectedFilters.saleType.value            
     }
 
     if (reset) {
-      paramData.page = 1 ;            
+      paramData.page = 1;
     } else {
-      paramData.page = page ;
+      paramData.page = page;
     }
-    
+
     axios.get("/api/item", {
       params: paramData
     })
-    .then(res => {            
-      setLoading(false)  
-      
-      if (res.data.items.length === 0) setNoItems(true)      
-      if (reset){        
+      .then(res => {
+        setLoading(false)
+
+        if (res.data.items.length === 0) setNoItems(true)
+        if (reset) {
           setItems(res.data.items)
           setInitialItemsLoaded(true)
-      }else{
+        } else {
           let prevArray = JSON.parse(JSON.stringify(items))
           prevArray.push(...res.data.items)
-          setItems(prevArray)        
-      }            
-    })
-    .catch(err => {            
-      setLoading(false) 
-      
-      console.log(err)  
-      setNoItems(true)      
-    })
+          setItems(prevArray)
+        }
+      })
+      .catch(err => {
+        setLoading(false)      
+        setNoItems(true)
+      })
   }
 
   function loadMore() {
     if (!loading) {
-      setPage(page => {return (page + 1)}) 
-    }      
+      setPage(page => { return (page + 1) })
+    }
   }
 
   const copyToClipboard = (text) => {
-    console.log('text', text)
     var textField = document.createElement('textarea')
     textField.innerText = text
     document.body.appendChild(textField)
@@ -193,132 +147,184 @@ function Profile(props) {
     document.execCommand('copy')
     textField.remove()
   }
+
+  const getFavoritedItems = () => {
+    let paramData = {
+      sortDir: 'desc',
+      sortBy: 'likeCount',
+      saleType: 'all'
+    }
+
+    axios.get("/api/item", {
+      params: paramData
+    })
+      .then(res => {
+        const sortedItems = res.data.items.filter((item => item.likeCount > 0)).sort(function (a, b) {
+          return b.likeCount - a.likeCount;
+        })       
+        setFavoritedItems(slice(sortedItems, 0, 9))
+      })
+      .catch(() => {
+        setFavoritedItems([])
+      })
+  }
+
   return (
     <Element.ProfilePageWrap>
-      <Element.ProfileBanner>
-        <Element.Container>
-          <div className="inner-wrap">
-            <div className="content-box">
-              <div className="profile-box">
-                <img
-                  className="profileimg"
-                  src={userProfile && userProfile.profilePic ? userProfile.profilePic : "/images/profile.png"}
-                  alt="ProfileImage"
-                />
-                <div className="profileInfo-box">
-                  <h1>{userProfile && userProfile.name ? userProfile.name : "NoName"}</h1>
-                  <div className="pinId">
-                    <span className="uid">{`${shorter(id)}`}</span>
-                    <span className="copy-button">
-                      <img src={CopyIcon} alt="ProfileImage" onClick={() => copyToClipboard(id)}/>
-                    </span>
-                    <span className="email">{userProfile && userProfile.socialLink ? userProfile.socialLink : ""}</span>
-                  </div>                  
-                </div>
-              </div>
-            </div>
-            <div className="button-box">
-              <Link to="/edit_profile" className="cta-button setting-button">
-                Setting
-              </Link>
-            </div>
-          </div>
-        </Element.Container>
-      </Element.ProfileBanner>
+      <PageHeader title='Author Profile' />
+      <Element.ProfileSection>
+        <GridContainer>
+          <div>
+            <Element.ProfileItem>
+              <Element.ProfileCover>
+                <img src='/images/cover.jpg' alt='Cover' />
+                <Element.EditProfile className="edit-profile">
+                  <Element.EditProfileBtn onClick={() => history.push('/edit_profile')}>
+                    <Element.EditIcon />
+                    Edit
+                  </Element.EditProfileBtn>
+                </Element.EditProfile>
+              </Element.ProfileCover>
 
-      <Element.HomeCardList>
-        <Element.Container>
-          <div className="tabBox">
-            <div className="tabContent">
-              <div className="resultCountBox">
-                <div className="resultCountLinks">
-                  <div className={curTab === 1 ? 'link is-active' : 'link'} onClick={() => setCurTab(1)}>
-                    Owned
-                  </div>
-                  <div className={curTab === 2 ? 'link is-active' : 'link'} onClick={() => setCurTab(2)}>
-                    On Sale
-                  </div>
-                  <div className={curTab === 3 ? 'link is-active' : 'link'} onClick={() => setCurTab(3)}>
-                    Created
-                  </div>
-                  <div className={curTab === 4 ? 'link is-active' : 'link'} onClick={() => setCurTab(4)}>
-                    Liked
-                  </div>
-                </div>                
-              </div>
-              
-              <div className="filterBox">
-                <div className="item-box" onClick={() => setShowSortBy(false)}>
-                  <input type="text" value={tempSearchTxt} className="form-search" placeholder="Search Items" onChange={event => {setTempSearchTxt(event.target.value)}} onKeyDown={event => {
-                    if (event.key === 'Enter')
-                      setSearchTxt(event.target.value)
-                  }}/>
-                </div>
-                <div className="item-box" onClick={() => setShowSortBy(false)}>
-                  <button className="cta-button filter-button" onClick={() => setShowFilter(!showFilter)}><img src={FilterIcon} alt="FilterIcon" /> Filters</button>
-                </div>
-                <div className="item-box">                      
-                  <button className="cta-button filter-button" onClick={() => setShowSortBy(!showSortBy)}> {sortByText}</button>
-                  <HomeElement.DropDownMenus style={{display : showSortBy ? '' : 'none'}}>
-                  {
-                    SELECT_ORDER_BY_ITEMS.map((o, index) => <HomeElement.DropDownMenu key={index}
-                        onClick={() => { setSortBy(o.value); setSortByText(o.text); setShowSortBy(false)}}>
-                        {o.text}
-                      </HomeElement.DropDownMenu> )
-                  }                                          
-                  </HomeElement.DropDownMenus>                      
-                </div>
-                {
-                  showFilter &&
-                  <HomeElement.FilterContent>
-                    <HomeElement.FilterFooter>
-                      <HomeElement.FilterCurrencyContainer>
-                        <HomeElement.FilterLabel>Sale Types: </HomeElement.FilterLabel>
-                        <HomeElement.FilterCurrencies>
+              <Element.ProfileInformation>
+                <Element.ProfilePic>
+                  <img src={userProfile && userProfile.profilePic ? userProfile.profilePic : "/images/profile.png"} alt="ProfileImage" />
+                  <Element.EditProfile className="edit-profile">
+                    <Element.EditProfileBtn onClick={() => history.push('/edit_profile')}>
+                      <Element.EditIcon />
+                      Edit
+                    </Element.EditProfileBtn>
+                  </Element.EditProfile>
+                </Element.ProfilePic>
+
+                <Element.ProfileName>
+                  <h4>
+                    {userProfile && userProfile.name ? userProfile.name : "NoName"}
+                  </h4>
+                  <p>
+                    {userProfile && userProfile.socialLink ? userProfile.socialLink : ""}
+                  </p>
+                </Element.ProfileName>
+
+                <Element.ProfileContact>
+                  <Element.CrytoCode>
+                    <input value={id} readOnly />
+                    <Element.CrytoCopy onClick={() => copyToClipboard(id)}>
+                      <Element.CopyIcon></Element.CopyIcon>
+                    </Element.CrytoCopy>
+                  </Element.CrytoCode>
+                </Element.ProfileContact>
+              </Element.ProfileInformation>
+            </Element.ProfileItem>
+
+            <Element.ProfileDetails>
+              <GridRow>
+                <GridItem xl={9} lg={12} md={9} sm={12} xs={12}>
+                  <Element.NavBox>
+                    <Element.NavItem>
+                      <Element.NavLink active={curTab == 1} onClick={() => setCurTab(1)}>
+                        Owned
+                      </Element.NavLink>
+                    </Element.NavItem>
+                    <Element.NavItem>
+                      <Element.NavLink active={curTab == 2} onClick={() => setCurTab(2)}>
+                        On Sale
+                      </Element.NavLink>
+                    </Element.NavItem>
+                    <Element.NavItem>
+                      <Element.NavLink active={curTab == 3} onClick={() => setCurTab(3)}>
+                        Created
+                      </Element.NavLink>
+                    </Element.NavItem>
+                    <Element.NavItem>
+                      <Element.NavLink active={curTab == 4} onClick={() => setCurTab(4)}>
+                        Liked
+                      </Element.NavLink>
+                    </Element.NavItem>
+                    <Element.FilterSelect>
+                      <select onChange={(e) => setSaleType(e.target.value)} value={saleType}>
+                        <option value='all'>All</option>
                         {
-                          SELECT_SALE_TYPES.map((saleType, index) => <HomeElement.FilterCategory key={index} onClick={() => onSetSaleType(saleType)} className={filters.saleType?.value === saleType.value?'active':''}>{saleType.text}</HomeElement.FilterCategory>)
-                        }                                            
-                        </HomeElement.FilterCurrencies>                                        
-                      </HomeElement.FilterCurrencyContainer>
-                      <button className="cta-button" onClick={() => onSetSelectedFilters()}>Ok</button>
-                    </HomeElement.FilterFooter>                            
-                  </HomeElement.FilterContent>
-                }
-              </div>
-              {
-                selectedFilters.saleType &&
-                <HomeElement.FilterString>
-                  {
-                    selectedFilters.saleType &&
-                    <HomeElement.FilterStringItem>
-                      <label>Sale Type: </label>
-                      <HomeElement.FilterValue>{selectedFilters.saleType.text}<HomeElement.RemoveIcon size={12} onClick={() => removeSaleType()}/></HomeElement.FilterValue>
-                    </HomeElement.FilterStringItem>
-                  }                        
-                  <HomeElement.FilterClearAll onClick={() => onClearAll()} >
-                    clear all
-                  </HomeElement.FilterClearAll>
-                </HomeElement.FilterString>
-              }
-              
-              <div className="cardList">
-              {
-                items.map((item, index)=> <Nft key={index} {...props} item={item} />)                        
-              }
-              </div>                
-               
-              <div className="cardList" style={{display: noItems ? "none" : ""}}>
-                <button className="cta-button"  onClick={() => loadMore()}>
-                  {loading ? "Loading..." : "Load more"}
-                </button>
-              </div>           
-            </div>
+                          SELECT_SALE_TYPES.map((option, index) => (
+                            <option key={index} value={option.value}>{option.text}</option>
+                          ))
+                        }
+                      </select>
+                    </Element.FilterSelect>
+                  </Element.NavBox>
+                  <Element.TabContents>
+                    <GridRow justifyContent='center'>
+                      {
+                        items.map((item, index) => (
+                          <GridItem xl={4} lg={4} md={4} sm={6} xs={12} key={index}>
+                            <ExploreItem item={item} />
+                          </GridItem>
+                        ))
+                      }
+                    </GridRow>
+                    {
+                      !noItems && (
+                        <GridItem xl={12} lg={12} md={12} sm={12} xs={12}>
+                          <Element.LoadMoreBtn onClick={() => loadMore()}>
+                            {loading ? "Loading..." : "Load more"}
+                          </Element.LoadMoreBtn>
+                        </GridItem>
+                      )
+                    }
+                  </Element.TabContents>
+                </GridItem>
+                <GridItem xl={3} lg={12} md={9} sm={12} xs={12}>
+                  <Element.RightSection>
+                    <Element.SearchWidget>
+                      <Element.WidgetTitle>
+                        <h5>Search NFT</h5>
+                      </Element.WidgetTitle>
+                      <Element.WidgetContent>
+                        <p>
+                          Search from best Rarest NFT collections
+                        </p>
+                        <Element.SearchBox>
+                          <Element.FormFloating width='100%'>
+                            <Element.SearchInput
+                              value={tempSearchTxt}
+                              onChange={event => { setTempSearchTxt(event.target.value) }}
+                              onKeyDown={event => {
+                                if (event.key === 'Enter')
+                                  setSearchTxt(event.target.value)
+                              }}
+                            />
+                            <Element.SearchLabel>Search NFT</Element.SearchLabel>
+                          </Element.FormFloating>
+                        </Element.SearchBox>
+                      </Element.WidgetContent>
+                    </Element.SearchWidget>
+
+                    <Element.SearchWidget>
+                      <Element.WidgetTitle>
+                        <h5>Most Favorited</h5>
+                      </Element.WidgetTitle>
+                      <Element.WidgetWrapper>
+                        {
+                          favoritedItems.map((item, index) => (
+                            <li key={index}>
+                              <Link to={`/detail/${item.itemCollection}/${item.tokenId}`}>
+                                <img src={item.image} alt="NftItem" loading="lazy" />
+                              </Link>
+                            </li>
+                          ))
+                        }
+                      </Element.WidgetWrapper>
+                    </Element.SearchWidget>
+                  </Element.RightSection>
+                </GridItem>
+              </GridRow>
+            </Element.ProfileDetails>
           </div>
-        </Element.Container>
-      </Element.HomeCardList>        
+        </GridContainer>
+      </Element.ProfileSection>
     </Element.ProfilePageWrap>
   );
-  
+
 }
 
 export default Profile;
