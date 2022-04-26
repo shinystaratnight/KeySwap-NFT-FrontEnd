@@ -6,21 +6,63 @@ import { Flickr } from '@styled-icons/boxicons-logos/Flickr'
 import { ClockFill } from '@styled-icons/bootstrap/ClockFill'
 
 export const NftItem = styled.div`
-  margin-bottom: 5px;
-  transition: all .3s ease;
+  margin-bottom: 35px;
   position: relative;
-  margin-top: 16px;
-  &:hover > div {
-    border: 1px solid rgba(0,0,0,.2);
-  }
 `
 export const NftInner = styled.div`
-  border-radius: 10px;
-  background-color: rgba(0,0,0,.07);
-  box-shadow: none;
+  transition: all .3s ease;
+  background-color: var(--bgcolorMaroon);
+  padding-inline: 20px;
+  padding: 40px 20px 35px;
+  box-shadow: 0 2px 5px rgb(3 0 16 / 20%);
+  border-radius: 5px;
   border: 1px solid transparent;
-  padding: 20px;
+  text-align: center!important;
+
+  &:before {
+    position: absolute;
+    content: "";
+    width: 90%;
+    height: 90%;
+    background: var(--bgcolorMaroon);
+    border: 1px solid rgba(255,255,255,.04);
+    box-shadow: 0 2px 5px rgb(3 0 16 / 20%);
+    bottom: -12px;
+    left: 50%;
+    z-index: -1;
+    transform: translateX(-50%);
+    transition: all .3s ease;
+    border-radius: 3px;
+  }
+
+  &:after {
+    position: absolute;
+    content: "";
+    width: 80%;
+    height: 80%;
+    background: var(--bgcolorMaroon);
+    border: 1px solid rgba(255,255,255,.04);
+    box-shadow: 0 2px 5px rgb(3 0 16 / 20%);
+    bottom: -22px;
+    left: 50%;
+    z-index: -2;
+    transform: translateX(-50%);
+    transition: all .3s ease;
+    border-radius: 3px;
+  }
+
+  &:hover {
+    transform: translateY(10px);
+    box-shadow: none;
+
+    &:after, &:before {
+      opacity: 0;
+      bottom: 0;
+      visibility: hidden;
+    }
+  }
 `
+
 export const NftBottom = styled.div`
 
 `

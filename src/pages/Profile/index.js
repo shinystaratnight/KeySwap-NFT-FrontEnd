@@ -21,7 +21,7 @@ function Profile(props) {
   const history = useHistory();
   const { user, login } = props;
   const [userProfile, setUserProfile] = useState(undefined)
-  const { account, chainId, library } = useWeb3React();
+  const { account, library } = useWeb3React();
 
   const [curTab, setCurTab] = useState(1); // 1: Owned, 2: On sale, 3: Created, 4: Liked
 
@@ -222,22 +222,22 @@ function Profile(props) {
                 <GridItem xl={9} lg={12} md={9} sm={12} xs={12}>
                   <Element.NavBox>
                     <Element.NavItem>
-                      <Element.NavLink active={curTab == 1} onClick={() => setCurTab(1)}>
+                      <Element.NavLink active={curTab === 1} onClick={() => setCurTab(1)}>
                         Owned
                       </Element.NavLink>
                     </Element.NavItem>
                     <Element.NavItem>
-                      <Element.NavLink active={curTab == 2} onClick={() => setCurTab(2)}>
+                      <Element.NavLink active={curTab === 2} onClick={() => setCurTab(2)}>
                         On Sale
                       </Element.NavLink>
                     </Element.NavItem>
                     <Element.NavItem>
-                      <Element.NavLink active={curTab == 3} onClick={() => setCurTab(3)}>
+                      <Element.NavLink active={curTab === 3} onClick={() => setCurTab(3)}>
                         Created
                       </Element.NavLink>
                     </Element.NavItem>
                     <Element.NavItem>
-                      <Element.NavLink active={curTab == 4} onClick={() => setCurTab(4)}>
+                      <Element.NavLink active={curTab === 4} onClick={() => setCurTab(4)}>
                         Liked
                       </Element.NavLink>
                     </Element.NavItem>

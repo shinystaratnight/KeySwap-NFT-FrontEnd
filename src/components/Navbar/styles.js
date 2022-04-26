@@ -32,7 +32,7 @@ export const LogoImage = styled.img`
 `;
 export const HeaderLogoLabel = styled.div`
   margin-left: 8px;
-  color: var(--colorOrange);
+  color: var(--colorMaroon);
   @media screen and (max-width: 375px) {
     font-size: 14px;
   }
@@ -49,7 +49,7 @@ export const TriggerButton = styled.button`
   border: 0;
   cursor: pointer;
   background-color: white;
-  color: var(--colorOrange);  
+  color: var(--colorMaroon);  
   margin-left: auto;
   display: none;
   svg {
@@ -79,12 +79,12 @@ export const NavLink = styled.a`
   padding: 10px 0;
   font-size: 17px;  
   cursor: pointer;
-  color: ${props => props.active ? 'var(--colorOrange)' : '#222'};
+  color: ${props => props.active ? 'var(--colorMaroon)' : '#222'};
   display: block;
   text-transform: capitalize;
   margin-right: 25px;
   &:hover {
-    color: var(--colorOrange);  
+    color: var(--colorMaroon);  
   }
   transition: 0.3s;
 `
@@ -125,7 +125,7 @@ export const BuyZonoLink = styled.a`
   text-transform: capitalize;
   margin-right: 25px;
   &:hover {
-    color: var(--colorOrange);  
+    color: var(--colorMaroon);  
   }
   transition: 0.3s;
 `

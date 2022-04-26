@@ -92,9 +92,9 @@ export const Container = styled.div`
         }
     }
     .cta-button{
-        background: var(--colorOrange);
+        background: var(--colorMaroon);
         padding: 12px 30px;
-        border:1px solid var(--colorOrange);
+        border:1px solid var(--colorMaroon);
         border-radius: 100px;
         display: inline-block;
         color: #fff;
@@ -169,7 +169,7 @@ export const SiteHeader = styled.div`
             .menuTrigger .line{
                 width: 33px;
                 height: 2px;
-                background-color: var(--colorOrange);
+                background-color: var(--colorMaroon);
                 display: block;
                 margin: 4px 0;
                 -webkit-transition: all 0.3s ease-in-out;
@@ -187,7 +187,7 @@ export const SiteHeader = styled.div`
             }
         }
         .menuClose{
-            background: var(--colorOrange);
+            background: var(--colorMaroon);
             background-image: url(./images/crossIcon.svg);
             background-position: center;
             background-repeat: no-repeat;
@@ -355,7 +355,7 @@ export const LogoImage = styled.img`
 
 export const HeaderLogoLabel = styled.div`
     margin-left: 8px;
-    color: var(--colorOrange);;
+    color: var(--colorMaroon);;
 `;
 
 export const HeaderNFT = styled.div`

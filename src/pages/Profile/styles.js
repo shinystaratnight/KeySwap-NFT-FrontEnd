@@ -1227,7 +1227,7 @@ export const NavItem = styled.li`
 	}
 `
 export const NavLink = styled.button`
-	color: ${props => props.active ? '#fff' : '#000'};
+	color: ${props => props.active ? 'var(--colorMaroon)' : '#000'};
 	padding: 5px 10px;
 	border-radius: 2px;
 	background: ${props => props.active ? 'var(--colorOrange)' : 'transparent'};

@@ -28,7 +28,7 @@ export const ExploreSection = styled.div`
   }
 `
 export const SectionHeader = styled.div`
-  border: 1px solid rgba(81,56,238,.2);
+  border: 1px solid var(--bgcolorMaroon);
   margin-bottom: 30px;
   border-radius: 3px;
   background: rgba(0,0,0,.07);
@@ -91,7 +91,7 @@ export const FormSelect = styled.select`
   }
 `
 export const SelectLabel = styled.label`
-  color: #5138ee;
+  color: var(--colorMaroon);
   opacity: .8;
   transform: scale(.85) translateY(-0.5rem) translateX(0.15rem);
   position: absolute;
@@ -107,7 +107,7 @@ export const SelectLabel = styled.label`
 ` 
 export const SearchBox = styled.div`
   & input:focus~label {
-    color: #5138ee;
+    color: var(--colorMaroon);
     opacity: .8;
     transform: scale(.85) translateY(-0.5rem) translateX(0.15rem);
   }
@@ -186,9 +186,9 @@ export const CardList = styled.div`
   }
 `
 export const LoadMoreBtn = styled.button`
-  background: var(--colorOrange);
+  background: var(--colorMaroon);
   padding: 12px 30px;
-  border: 1px solid var(--colorOrange);
+  border: 1px solid var(--colorMaroon);
   border-radius: 100px;
   display: inline-block;
   color: #fff;
