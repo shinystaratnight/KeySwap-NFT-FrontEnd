@@ -8,6 +8,7 @@ import { slice } from 'lodash'
 import PageHeader from 'components/PageHeader'
 import { GridContainer, GridRow, GridItem } from 'components/Grid'
 import ExploreItem from 'components/ExploreItem'
+import CustomSnackbar from 'components/CustomSnackbar'
 
 import * as Element from "./styles";
 
@@ -35,6 +36,9 @@ function Profile(props) {
   const [noItems, setNoItems] = useState(false)
   const [initialItemsLoaded, setInitialItemsLoaded] = useState(false)
   const [loading, setLoading] = useState(false)
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackBarMessage, setSnackBarMessage] = useState("");
 
   useEffect(() => {
     if (!userProfile) {
@@ -128,7 +132,7 @@ function Profile(props) {
         }
       })
       .catch(err => {
-        setLoading(false)      
+        setLoading(false)
         setNoItems(true)
       })
   }
@@ -161,7 +165,7 @@ function Profile(props) {
       .then(res => {
         const sortedItems = res.data.items.filter((item => item.likeCount > 0)).sort(function (a, b) {
           return b.likeCount - a.likeCount;
-        })       
+        })
         setFavoritedItems(slice(sortedItems, 0, 9))
       })
       .catch(() => {
@@ -209,7 +213,11 @@ function Profile(props) {
                 <Element.ProfileContact>
                   <Element.CrytoCode>
                     <input value={id} readOnly />
-                    <Element.CrytoCopy onClick={() => copyToClipboard(id)}>
+                    <Element.CrytoCopy onClick={() => {
+                      copyToClipboard(id);
+                      setSnackBarMessage("Copied");
+                      setOpenSnackbar(true);
+                    }}>
                       <Element.CopyIcon></Element.CopyIcon>
                     </Element.CrytoCopy>
                   </Element.CrytoCode>
@@ -322,6 +330,11 @@ function Profile(props) {
           </div>
         </GridContainer>
       </Element.ProfileSection>
+      <CustomSnackbar
+        open={openSnackbar}
+        handleClose={() => setOpenSnackbar(false)}
+        message={snackBarMessage}
+      />
     </Element.ProfilePageWrap>
   );
 

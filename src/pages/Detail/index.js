@@ -189,8 +189,7 @@ function Detail(props) {
 	}
 
 
-	const handleCloseDialog = (event, reason) => {
-		if (reason === 'clickaway') return;
+	const handleCloseDialog = () => {		
 		setOpenSnackbar(false);
 	};
 
@@ -459,7 +458,11 @@ function Detail(props) {
 						<GridItem xl={6} lg={6} md={12} sm={12}>
 							<Element.ItemDescPart>
 								<Element.ItemDescThumb>
-									<img loading="lazy" src={item?.image} alt='Item-img' />
+									{
+										item?.image && (
+											<img loading="lazy" src={item?.image} alt='Item-img' />
+										)
+									}
 								</Element.ItemDescThumb>
 								<Element.ItemDescContent>
 									<Element.TabList>
@@ -487,7 +490,11 @@ function Detail(props) {
 											<Element.AuthorProfile>
 												<Element.AuthorThumb>
 													<Link to={`/profile/${item?.ownerUser.address}`}>
-														<img src={item?.ownerUser.profilePic} alt='Author' />
+														{
+															item?.ownerUser.profilePic && (
+																<img src={item?.ownerUser.profilePic} alt='Author' />
+															)
+														}
 													</Link>
 												</Element.AuthorThumb>
 												<Element.AuthorInfo>
@@ -847,7 +854,7 @@ function Detail(props) {
 				open={openSnackbar}
 				handleClose={handleCloseDialog}
 				message={snackBarMessage}
-			/>		
+			/>
 		</div>
 	);
 

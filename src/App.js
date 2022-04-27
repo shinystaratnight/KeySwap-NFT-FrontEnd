@@ -23,7 +23,7 @@ import Detail from "./pages/Detail";
 import Home from "./pages/Home";
 import Explore from 'pages/Explore'
 
-function App() {   
+function App() {
 
   const [connectModalOpen, setConnectModalOpen] = useState(null);
   const [errorModalOpen, setErrorModalOpen] = useState(null);
@@ -31,7 +31,7 @@ function App() {
 
   function getModalStyle() {
     const top = 50
-    const left = 50  
+    const left = 50
     return {
       top: `${top}%`,
       left: `${left}%`,
@@ -100,7 +100,7 @@ function App() {
     loginUser(dispatch, account, user?.nonce, library.getSigner())
   }
 
-  useEffect(() => {      
+  useEffect(() => {
     if (active && account){
       getUser(dispatch, account)
     }
@@ -114,25 +114,19 @@ function App() {
   return (
     <React.Fragment>
       <Router>
-        <Switch>          
+        <Switch>
           <Route path="/" exact render={(props) => (<Layout {...props} connectAccount={connectAccount}><Home {...props} user={user}/></Layout>)}/>
           <Route path="/explore" exact render={(props) => (<Layout {...props} connectAccount={connectAccount}><Explore {...props} user={user}/></Layout>)}/>
           <Route path="/create" exact render={(props) => (<Layout {...props} connectAccount={connectAccount}><Create {...props} user={user}/></Layout>)}/>
           <Route path="/profile/:id" exact render={(props) => (<Layout {...props} connectAccount={connectAccount}><Profile {...props} getUser={getUser} user={user} login={login}/></Layout>)}/>
           <Route path="/edit_profile" exact render={(props) => (<Layout {...props} connectAccount={connectAccount}><EditProfile {...props} getUser={getUser} user={user} login={login}/></Layout>)}/>
           <Route path="/detail/:collection/:id" exact render={(props) => (<Layout {...props} connectAccount={connectAccount}><Detail {...props} user={user} /></Layout>)}/>
-        </Switch>                    
+        </Switch>
       </Router>
 
       <Modal
         open={!!errorModalOpen && !active}
-        onClose={(event, reason) => {
-          if (reason === "backdropClick") {
-            return false;
-          }      
-          if (reason === "escapeKeyDown") {
-            return false;
-          }      
+        onClose={() => {
           setErrorModalOpen(false)
         }}
         aria-labelledby="simple-modal-title"
@@ -142,19 +136,13 @@ function App() {
           <p>{networkError}</p>
           <Button className="" onClick={closeErrorModal} variant="contained" color="primary">Close</Button>            
         </div>
-
       </Modal>
+
       <Modal
         open={!!connectModalOpen}
-        onClose={(event, reason) => {
-          if (reason === "backdropClick") {
-            return false;
-          }      
-          if (reason === "escapeKeyDown") {
-            return false;
-          }      
+        onClose={() => {
           setConnectModalOpen(false)
-        }}        
+        }}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
         >
@@ -168,7 +156,7 @@ function App() {
                 onClick={() => {
                   connectToProvider(entry.connectorId);
                   window.localStorage.setItem(connectorLocalStorageKey, entry.key);
-                  setConnectModalOpen(false)                               
+                  setConnectModalOpen(false)
                 }}
                 className="connect-button textPrimary"
                 color="primary"
@@ -183,10 +171,8 @@ function App() {
             <div style={{textAlign: 'center'}}>
               <Button className="mt-3" onClick={() => {setConnectModalOpen(false)}} variant="contained" color="primary">Close</Button>
             </div>
-          
         </div>
       </Modal>
-    
     </React.Fragment>
   );
   
