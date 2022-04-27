@@ -95,9 +95,9 @@ export const Container = styled.div`
         }
     }
     .cta-button{
-        background: var(--colorOrange);
+        background: var(--colorMaroon);
         padding: 12px 45px;
-        border:1px solid var(--colorOrange);
+        border:1px solid var(--colorMaroon);
         border-radius: 100px;
         display: inline-block;
         color: #fff;
@@ -279,7 +279,7 @@ export const HomeCardList = styled.div`
                     padding-bottom: 6px;
                     border-bottom: 2px solid transparent;
                     &.is-active{
-                        border-color: var(--colorOrange);
+                        border-color: var(--colorMaroon);
                     }
                     span{
                         position: relative;
@@ -317,7 +317,7 @@ export const HomeCardList = styled.div`
                     background-color: #EBEBEB;
                 }
                 &.is-active{
-                    background-color: var(--colorOrange);
+                    background-color: var(--colorMaroon);
                     color: #fff;
                 }
                 @media(max-width:1200px){
@@ -428,10 +428,10 @@ export const HomeCardList = styled.div`
         
         .selectWrap{
             position: relative;
-            background: var(--colorOrange);
+            background: var(--colorMaroon);
             padding: 0px 30px;
             width: 100%;
-            border:1px solid var(--colorOrange);
+            border:1px solid var(--colorMaroon);
             border-radius: 100px;
             display: inline-block;
             color: #fff;
@@ -440,7 +440,7 @@ export const HomeCardList = styled.div`
                 padding: 0px 20px;
             }
             select{
-                background: var(--colorOrange);
+                background: var(--colorMaroon);
                 color: #fff;
                 width: 100%;
                 outline: 0;
@@ -885,7 +885,7 @@ export const HomeCardList = styled.div`
 
 export const ProfileBanner = styled.div`
     padding: 50px 0;
-    background-color: var(--colorOrange);
+    background-color: var(--colorMaroon);
     color: #fff;
 
     .inner-wrap{
@@ -979,9 +979,9 @@ export const ProfileBanner = styled.div`
             }
         }
         .cta-button{
-            background: var(--colorOrange);
+            background: var(--colorMaroon);
             padding: 12px 45px;
-            border:1px solid var(--colorOrange);
+            border:1px solid var(--colorMaroon);
             border-radius: 100px;
             display: inline-block;
             color: #fff;
@@ -1192,7 +1192,7 @@ export const CrytoCopy = styled.div`
 	border: 1px solid #040b29;
 	border-radius: 5px;
 	margin-left: 5px;
-	background: var(--colorOrange);
+	background: var(--colorMaroon);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -1227,10 +1227,10 @@ export const NavItem = styled.li`
 	}
 `
 export const NavLink = styled.button`
-	color: ${props => props.active ? 'var(--colorMaroon)' : '#000'};
+	color: ${props => props.active ? '#fff' : '#000'};
 	padding: 5px 10px;
 	border-radius: 2px;
-	background: ${props => props.active ? 'var(--colorOrange)' : 'transparent'};
+	background: ${props => props.active ? 'var(--colorMaroon)' : 'transparent'};
 	border: 0;
 	outline: none !important;
 	cursor: pointer;
@@ -1244,9 +1244,9 @@ export const TabContents = styled.div`
 
 `
 export const LoadMoreBtn = styled.button`
-  background: var(--colorOrange);
+  background: var(--colorMaroon);
   padding: 12px 30px;
-  border: 1px solid var(--colorOrange);
+  border: 1px solid var(--colorMaroon);
   border-radius: 100px;
   display: inline-block;
   color: #fff;

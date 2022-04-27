@@ -471,7 +471,7 @@ export const ModalActions = styled.div`
 `;
 
 export const ModalButton = styled.div`
-	background: var(--colorOrange);
+	background: var(--colorMaroon);
 	padding: 16px 20px;
 	border-radius: 4px;
 	cursor: pointer;
@@ -487,8 +487,8 @@ export const ModalCancelButton = styled.div`
 	cursor: pointer;
 	font-weight: bold;
 	width: 160px;
-	border: 2px solid var(--colorOrange);
-	color: var(--colorOrange);
+	border: 2px solid var(--colorMaroon);
+	color: var(--colorMaroon);
 	@media screen and (max-width: 375px) {
 		width: 100%;
 		margin-right: 0;
@@ -497,7 +497,7 @@ export const ModalCancelButton = styled.div`
 `;
 
 export const ModalSubmitButton = styled.div`
-	background: var(--colorOrange);
+	background: var(--colorMaroon);
 	padding: 16px 20px;
 	border-radius: 4px;
 	cursor: pointer;
@@ -824,7 +824,7 @@ export const ItemInfoDetails = styled.div`
     overflow: hidden;
 		span {
 			padding: 4px 8px;
-			background: var(--colorOrange);
+			background: var(--colorMaroon);
 			color: #fff;
 			font-size: 12px;
 			border-radius: 6px;			
@@ -940,7 +940,7 @@ export const ActionBtn = styled.button`
 	font-size: 1rem;
 	transform-origin: right;
 	transition: all .3s ease;
-	background: var(--colorOrange);
+	background: var(--colorMaroon);
 	font-weight: bold;
 	display: ${props => props.hidden ? 'none' : 'inline-block'};
 	overflow: hidden;
@@ -955,7 +955,7 @@ export const ActionBtn = styled.button`
 		line-height: 50px;
 	}
 	&:hover {
-		color: var(--colorOrange);
+		color: var(--colorMaroon);
 		transform: translateY(-3px);
 		background: #fff;	
 	}
@@ -965,15 +965,15 @@ export const TopLeftCorner = styled.div`
   width: 1rem;
   height: 1rem;
   transition: all .3s ease;
-  border-top: 3px solid var(--colorOrange);
-  border-left: 3px solid var(--colorOrange);
+  border-top: 3px solid var(--colorMaroon);
+  border-left: 3px solid var(--colorMaroon);
   top: -3px;
   left: -3px;
   border-top-left-radius: 10px;
 `
 export const BottomRightRadius = styled.div`
-  border-bottom: 3px solid var(--colorOrange);
-  border-right: 3px solid var(--colorOrange);
+  border-bottom: 3px solid var(--colorMaroon);
+  border-right: 3px solid var(--colorMaroon);
   bottom: -3px;
   right: -3px;
   border-bottom-right-radius: 10px;
@@ -985,8 +985,8 @@ export const BottomRightRadius = styled.div`
 export const MiddleBorder = styled.div`
   width: 2rem; 
   top: -3px;
-  border-bottom: 3px solid var(--colorOrange);
-  border-top: 3px solid var(--colorOrange);
+  border-bottom: 3px solid var(--colorMaroon);
+  border-top: 3px solid var(--colorMaroon);
   position: absolute;
   transition: all .3s ease;
   left: 50%;

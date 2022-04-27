@@ -9,8 +9,8 @@ import IconButton from '@material-ui/core/IconButton';
 const useStyles = makeStyles(() => ({
   snackbar: {
     '& .MuiSnackbarContent-root': {
-      backgroundColor: 'var(--colorOrange)',
-      boxShadow: '0px 3px 5px -1px rgb(var(--colorOrange) / 20%), 0px 6px 10px 0px rgb(var(--colorOrange) / 14%), 0px 1px 18px 0px rgb(var(--colorOrange) / 12%)'
+      backgroundColor: 'var(--colorMaroon)',
+      boxShadow: '0px 3px 5px -1px rgb(var(--colorMaroon) / 20%), 0px 6px 10px 0px rgb(var(--colorMaroon) / 14%), 0px 1px 18px 0px rgb(var(--colorMaroon) / 12%)'
     }
   }
 }))
