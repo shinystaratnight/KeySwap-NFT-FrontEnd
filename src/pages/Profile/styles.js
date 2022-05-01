@@ -1192,7 +1192,7 @@ export const CrytoCopy = styled.div`
 	border: 1px solid #040b29;
 	border-radius: 5px;
 	margin-left: 5px;
-	background: var(--colorMaroon);
+	background: transparent;
 	display: flex;
 	align-items: center;
 	justify-content: center;
