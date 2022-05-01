@@ -8,7 +8,6 @@ import { slice } from 'lodash'
 import PageHeader from 'components/PageHeader'
 import { GridContainer, GridRow, GridItem } from 'components/Grid'
 import ExploreItem from 'components/ExploreItem'
-import CustomSnackbar from 'components/CustomSnackbar'
 
 import * as Element from "./styles";
 
@@ -37,8 +36,7 @@ function Profile(props) {
   const [initialItemsLoaded, setInitialItemsLoaded] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [snackBarMessage, setSnackBarMessage] = useState("");
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (!userProfile) {
@@ -214,11 +212,14 @@ function Profile(props) {
                   <Element.CrytoCode>
                     <input value={id} readOnly />
                     <Element.CrytoCopy onClick={() => {
-                      copyToClipboard(id);
-                      setSnackBarMessage("Copied");
-                      setOpenSnackbar(true);
+                      copyToClipboard(id);       
+                      setCopied(true);
+                      setTimeout(() => setCopied(false), 2000)
                     }}>
                       <Element.CopyIcon></Element.CopyIcon>
+                      <Element.CopiedAlert show={copied}>
+                        Copied
+                      </Element.CopiedAlert>
                     </Element.CrytoCopy>
                   </Element.CrytoCode>
                 </Element.ProfileContact>
@@ -329,12 +330,7 @@ function Profile(props) {
             </Element.ProfileDetails>
           </div>
         </GridContainer>
-      </Element.ProfileSection>
-      <CustomSnackbar
-        open={openSnackbar}
-        handleClose={() => setOpenSnackbar(false)}
-        message={snackBarMessage}
-      />
+      </Element.ProfileSection>     
     </Element.ProfilePageWrap>
   );
 

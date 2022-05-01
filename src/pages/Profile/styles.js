@@ -1196,6 +1196,7 @@ export const CrytoCopy = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+    position: relative;
 `
 export const CopyIcon = styled(FileCopy2)`
 	color: #fff;
@@ -1396,4 +1397,21 @@ export const FilterSelect = styled.li`
     margin: 0;
 		font-size: 1rem;
 	}
+`
+export const CopiedAlert = styled.div`
+    transition: all .3s ease;
+    display: inline-block;
+    position: absolute;
+    content: "";   
+    overflow: hidden;
+    width: max-content;
+    height: max-content;
+    border: 1px solid rgba(255,255,255,.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(4,11,41,.3);
+    top: -40px;
+    color: white;
+    opacity: ${props => props.show ? '1' : '0'};
+    transform: ${props => props.show ? 'translateX(0%) translateY(0)' : ''};
 `
